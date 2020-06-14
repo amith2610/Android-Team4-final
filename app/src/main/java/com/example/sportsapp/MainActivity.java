@@ -3,6 +3,7 @@ package com.example.sportsapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -17,27 +18,23 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
 
-        Button login = (Button) findViewById(R.id.login);
-        EditText rollno=(EditText) findViewById(R.id.rollno);
-        EditText password=(EditText) findViewById(R.id.password);
+        Button logbtn = (Button) findViewById(R.id.logbtn);
+        EditText roll=(EditText) findViewById(R.id.roll);
+        EditText pwd=(EditText) findViewById(R.id.pwd);
 
-        login.setOnClickListener(
-                new Button.OnClickListener() {
-
-                    @Override
-                    public void onClick(View v) {
-
-                        EditText rollno=(EditText) findViewById(R.id.rollno);
-
-
-
-
-                    }
-                }
-
-
-
-        );
-
+        logbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openActivity2();
+            }
+        });
     }
+
+    private void openActivity2() {
+        Intent intent = new Intent(this,MainActivity2.class);
+        startActivity(intent);
+    }
+
+
+
 }

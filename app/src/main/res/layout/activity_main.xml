@@ -8,7 +8,7 @@
     tools:context=".MainActivity">
 
     <EditText
-        android:id="@+id/rollno"
+        android:id="@+id/roll"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -23,7 +23,7 @@
         app:layout_constraintVertical_bias="0.581" />
 
     <EditText
-        android:id="@+id/password"
+        android:id="@+id/pwd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -37,7 +37,7 @@
         app:layout_constraintVertical_bias="0.714" />
 
     <Button
-        android:id="@+id/login"
+        android:id="@+id/logbtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="#10E5F7"
