@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Space;
@@ -40,7 +41,7 @@ public class MainActivity2 extends AppCompatActivity {
         String c="Count(5/5)";
         LinearLayout resourceset=new LinearLayout(this);
         resourceset.setOrientation(LinearLayout.HORIZONTAL);
-        resourceset.setBackgroundColor(getResources().getColor(R.color.layoutbg));
+        resourceset.setBackground(getResources().getDrawable(R.drawable.lay_bg));
         //resourceset.setPadding(18,32,18,32);
         LinearLayout resourceE1=new LinearLayout(this);
         resourceE1.setOrientation(LinearLayout.VERTICAL);
@@ -48,7 +49,7 @@ public class MainActivity2 extends AppCompatActivity {
         //resourceE1.setBackgroundColor(Color.RED);
         //resourceE2.setBackgroundColor(Color.GREEN);
         resourceE1.setPadding(40,30,0,20);
-        resourceE2.setPadding(380,20,18,20);
+        resourceE2.setPadding(350,40,30,40);
         TextView tvResourse= new TextView(this);
         TextView tvCount= new TextView(this);
         Space space=new Space(this);
@@ -59,9 +60,10 @@ public class MainActivity2 extends AppCompatActivity {
         tvCount.setText(c);
         tvCount.setTextColor(Color.WHITE);
         tvCount.setTextSize(12);
-        Button bookbtn=new Button(this);
+        TextView bookbtn=new TextView(this);
         bookbtn.setText("Book");
-        bookbtn.setBackground(getResources().getDrawable(R.drawable.layout_border));
+        bookbtn.setPadding(40,20,40,20);
+        bookbtn.setBackground(getResources().getDrawable(R.drawable.btn_bg));
         //bookbtn.setBackgroundColor(Color.WHITE);
         bookbtn.setTextColor(getResources().getColor(R.color.layoutbg));
         resourceE1.addView(tvResourse);
