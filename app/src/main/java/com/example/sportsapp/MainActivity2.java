@@ -3,12 +3,14 @@ package com.example.sportsapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Space;
 import android.widget.TextView;
+
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -53,11 +55,14 @@ public class MainActivity2 extends AppCompatActivity {
         tvResourse.setText(r);
         tvResourse.setTextColor(Color.WHITE);
         tvResourse.setTextSize(18);
+        tvResourse.setTypeface(Typeface.SERIF);
         tvCount.setText(c);
         tvCount.setTextColor(Color.WHITE);
+        tvCount.setTextSize(12);
         Button bookbtn=new Button(this);
         bookbtn.setText("Book");
-        bookbtn.setBackgroundColor(Color.WHITE);
+        bookbtn.setBackground(getResources().getDrawable(R.drawable.layout_border));
+        //bookbtn.setBackgroundColor(Color.WHITE);
         bookbtn.setTextColor(getResources().getColor(R.color.layoutbg));
         resourceE1.addView(tvResourse);
         resourceE1.addView(tvCount);
