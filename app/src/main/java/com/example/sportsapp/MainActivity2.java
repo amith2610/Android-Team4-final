@@ -2,8 +2,10 @@ package com.example.sportsapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Space;
 import android.widget.TextView;
@@ -19,13 +21,13 @@ public class MainActivity2 extends AppCompatActivity {
         FloatingActionButton addbtn;
 
         addbtn=(FloatingActionButton) findViewById(R.id.addbtn);
-         final LinearLayout list;
-         list=(LinearLayout) findViewById(R.id.list);
+         final LinearLayout availablelist;
+         availablelist=(LinearLayout) findViewById(R.id.availablelist);
 
          addbtn.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
-                 add(list);
+                 add(availablelist);
              }
          });
 
@@ -33,21 +35,38 @@ public class MainActivity2 extends AppCompatActivity {
 
     private void add(LinearLayout list) {
         String r="Resourse";
-        String c="count";
-        LinearLayout newResourse=new LinearLayout(this);
-        newResourse.setOrientation(LinearLayout.VERTICAL);
-        newResourse.setBackgroundColor(getResources().getColor(R.color.layoutbg));
-        newResourse.setPadding(18,32,18,32);
+        String c="Count(5/5)";
+        LinearLayout resourceset=new LinearLayout(this);
+        resourceset.setOrientation(LinearLayout.HORIZONTAL);
+        resourceset.setBackgroundColor(getResources().getColor(R.color.layoutbg));
+        //resourceset.setPadding(18,32,18,32);
+        LinearLayout resourceE1=new LinearLayout(this);
+        resourceE1.setOrientation(LinearLayout.VERTICAL);
+        LinearLayout resourceE2=new LinearLayout(this);
+        //resourceE1.setBackgroundColor(Color.RED);
+        //resourceE2.setBackgroundColor(Color.GREEN);
+        resourceE1.setPadding(40,30,0,20);
+        resourceE2.setPadding(380,20,18,20);
         TextView tvResourse= new TextView(this);
         TextView tvCount= new TextView(this);
         Space space=new Space(this);
         tvResourse.setText(r);
+        tvResourse.setTextColor(Color.WHITE);
+        tvResourse.setTextSize(18);
         tvCount.setText(c);
-        newResourse.addView(tvResourse);
-        newResourse.addView(tvCount);
-        list.addView(newResourse);
+        tvCount.setTextColor(Color.WHITE);
+        Button bookbtn=new Button(this);
+        bookbtn.setText("Book");
+        bookbtn.setBackgroundColor(Color.WHITE);
+        bookbtn.setTextColor(getResources().getColor(R.color.layoutbg));
+        resourceE1.addView(tvResourse);
+        resourceE1.addView(tvCount);
+        resourceE2.addView(bookbtn);
+        resourceset.addView(resourceE1);
+        resourceset.addView(resourceE2);
+        list.addView(resourceset);
         list.addView(space,0,60);
-        list.setPadding(50,0,50,);
+        list.setPadding(50,0,50,0);
 
 
 
