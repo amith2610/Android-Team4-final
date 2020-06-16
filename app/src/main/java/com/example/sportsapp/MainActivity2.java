@@ -24,6 +24,8 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -55,9 +57,15 @@ public class MainActivity2 extends AppCompatActivity {
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        int len = response.length();
+                        String newResponse = response.toString();
+                        GsonBuilder gsonBuilder = new GsonBuilder();
+                        Gson gson = gsonBuilder.create();
+                        Resource[] resources = gson.fromJson(newResponse,Resource[].class);
+                        int len = resources.length;
                         for(int i=0;i<len;i++){
-                            add(availablelist);
+                            Resource unit = resources[i];
+                            add(availablelist,unit);
+
                         }
                     }
                 },
@@ -82,15 +90,15 @@ public class MainActivity2 extends AppCompatActivity {
         addbtn.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
-                 add(availablelist);
+
              }
          });
 
     }
 
-    private void add(LinearLayout list) {
-        String r="Resourse";
-        String c="Count(5/5)";
+    private void add(LinearLayout list, Resource unit) {
+        String r=unit.getResourceName();
+        String c=unit.getCount().toString();
         LinearLayout resourceset=new LinearLayout(this);
         resourceset.setOrientation(LinearLayout.HORIZONTAL);
         resourceset.setBackground(getResources().getDrawable(R.drawable.lay_bg));
@@ -101,7 +109,7 @@ public class MainActivity2 extends AppCompatActivity {
         //resourceE1.setBackgroundColor(Color.RED);
         //resourceE2.setBackgroundColor(Color.GREEN);
         resourceE1.setPadding(40,30,0,20);
-        resourceE2.setPadding(350,40,30,40);
+        resourceE2.setPadding(280,40,30,40);
         TextView tvResourse= new TextView(this);
         TextView tvCount= new TextView(this);
         Space space=new Space(this);
