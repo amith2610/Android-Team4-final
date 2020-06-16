@@ -1,0 +1,9 @@
+
+?squid:S1481%"(Remove this unused "pwd" local variable.(Ú¦ôö
+psquid:S00117'"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¸³àŽ8ðëæá«.
+isquid:UselessImportCheck"ERemove this unused import 'androidx.appcompat.app.AppCompatActivity'.(€¶£î
+Tsquid:S1854$"8Remove this useless assignment to local variable "roll".(ìÜ¶²ÿÿÿÿÿ
+tsquid:S2068+"V'password' detected in this expression, review this potentially hard-coded credential.(´ûî©8ðëæá«.
+Esquid:S1481$")Remove this unused "roll" local variable.(ìÜ¶²ÿÿÿÿÿ
+Nsquid:S1854%"7Remove this useless assignment to local variable "pwd".(Ú¦ôö
+]squid:UselessImportCheck"4Remove this unused import 'android.widget.TextView'.(„Ë‚ˆÿÿÿÿÿ
