@@ -6,8 +6,10 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Space;
@@ -98,7 +100,7 @@ public class MainActivity2 extends AppCompatActivity {
 
     private void add(LinearLayout list, Resource unit) {
         String r=unit.getResourceName();
-        String c=unit.getCount().toString();
+        String c="Count: "+unit.getCount().toString();
         LinearLayout resourceset=new LinearLayout(this);
         resourceset.setOrientation(LinearLayout.HORIZONTAL);
         resourceset.setBackground(getResources().getDrawable(R.drawable.lay_bg));
@@ -109,7 +111,7 @@ public class MainActivity2 extends AppCompatActivity {
         //resourceE1.setBackgroundColor(Color.RED);
         //resourceE2.setBackgroundColor(Color.GREEN);
         resourceE1.setPadding(40,30,0,20);
-        resourceE2.setPadding(280,40,30,40);
+        resourceE2.setGravity(Gravity.LEFT| Gravity.CENTER_VERTICAL);
         TextView tvResourse= new TextView(this);
         TextView tvCount= new TextView(this);
         Space space=new Space(this);
