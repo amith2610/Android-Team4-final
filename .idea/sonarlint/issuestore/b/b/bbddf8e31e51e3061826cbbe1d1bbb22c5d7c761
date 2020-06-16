@@ -1,9 +1,16 @@
 
-Wsquid:UselessImportCheck	"3Remove this unused import 'android.view.ViewGroup'.(‹îá
-gsquid:CommentedOutCodeLine-"<This block of commented-out lines of code should be removed.(ã‡Åòÿÿÿÿÿ
-jsquid:MaximumInheritanceDepth"<This class has 6 parents which is greater than 5 authorized.(æşÎ ùÿÿÿÿ
-gsquid:CommentedOutCodeLineC"<This block of commented-out lines of code should be removed.(›²™×úÿÿÿÿ
-[squid:UselessImportCheck
-"2Remove this unused import 'android.widget.Button'.(²òıÿÿÿÿ
-bsquid:CommentedOutCodeLine1"<This block of commented-out lines of code should be removed.(ç¤
-Ysquid:S2696"6Make the enclosing method "static" or remove this set.(¶Ÿšşÿÿÿÿ8¢Âğá«.
+tsquid:UselessImportCheck"IRemove this unused import 'com.android.volley.toolbox.JsonObjectRequest'.(Ã¦¿¾8¾óÆâ«.
+nsquid:CommentedOutCodeLinea"<This block of commented-out lines of code should be removed.(ã‡Åòÿÿÿÿÿ8Ú¡ìâ«.
+`squid:UselessImportCheck"0Remove this unused import 'org.json.JSONObject'.(œÖ´üşÿÿÿÿ8‡Êëâ«.
+Wsquid:UselessImportCheck
+"3Remove this unused import 'android.view.ViewGroup'.(‹îá
+rsquid:S1450&"TRemove the "queue" field and declare it as a local variable in the relevant methods.(®¤œé8Œ†ã«.
+isquid:CommentedOutCodeLinee"<This block of commented-out lines of code should be removed.(ç¤8Ú¡ìâ«.
+|squid:S2293J"YReplace the type specification in this constructor call with the diamond operator ("<>").(ô›Óíüÿÿÿÿ8Ú¡ìâ«.
+nsquid:CommentedOutCodeLinew"<This block of commented-out lines of code should be removed.(›²™×úÿÿÿÿ8Ú¡ìâ«.
+psquid:S001172"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ú±è…8³ÊÅâ«.
+[squid:UselessImportCheck"2Remove this unused import 'android.widget.Button'.(²òıÿÿÿÿ
+csquid:UselessImportCheck"3Remove this unused import 'org.json.JSONException'.(¹Ó·úÿÿÿÿ8Ú¡ìâ«.
+jsquid:MaximumInheritanceDepth#"<This class has 6 parents which is greater than 5 authorized.(æşÎ ùÿÿÿÿ
+Ysquid:S2696."6Make the enclosing method "static" or remove this set.(¶Ÿšşÿÿÿÿ8¢Âğá«.
+]squid:UselessImportCheck"-Remove this unused import 'android.util.Log'.(Ô¦Ø²øÿÿÿÿ8Ã¥˜ã«.

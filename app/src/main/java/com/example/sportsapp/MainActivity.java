@@ -34,23 +34,33 @@ public class MainActivity extends Activity {
     JsonObjectRequest objectRequest;
     JsonArrayRequest arrayRequest;
     JSONObject data;
+    TextView textView4;
+    EditText roll;
+    EditText pwd;
+    String sroll;
+     String spwd;
+     TextView textView6;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         Button logbtn = (Button) findViewById(R.id.logbtn);
-        EditText roll=(EditText) findViewById(R.id.roll);
-        EditText pwd=(EditText) findViewById(R.id.pwd);
+         roll=(EditText) findViewById(R.id.roll);
+         pwd=(EditText) findViewById(R.id.pwd);
+        textView4=(TextView) findViewById(R.id.textView4);
+        textView6=(TextView) findViewById(R.id.textView6);
 
         String URL = "https://sport-resources-booking-api.herokuapp.com/login";
-        data = new JSONObject();
+       /* data = new JSONObject();
         try {
-            data.put("id","160118733012");
-            data.put("password","abc123");
+            data.put("id",sroll);
+            data.put("password",spwd);
         } catch (JSONException e) {
             e.printStackTrace();
-        }
+        }*/
+
 
         queue = Volley.newRequestQueue(this);
         objectRequest = new JsonObjectRequest(Request.Method.POST,
@@ -61,6 +71,9 @@ public class MainActivity extends Activity {
                     public void onResponse(JSONObject response) {
                         try {
                             MainActivity2.accessTkn = response.getString("access_token");
+                            textView4.setText(sroll);
+                            textView6.setText(data.toString());
+
                             openActivity2();
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -72,7 +85,9 @@ public class MainActivity extends Activity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
 
-                        Toast toast = Toast.makeText(getApplicationContext(),error.toString(),Toast.LENGTH_LONG);
+                        textView4.setText(sroll);
+                        textView6.setText(data.toString());
+                        Toast toast = Toast.makeText(getApplicationContext(),"Enter Valid Credentials",Toast.LENGTH_LONG);
                         toast.show();
                     }
                 });
@@ -80,12 +95,24 @@ public class MainActivity extends Activity {
         logbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                sroll=roll.getText().toString();
+                spwd=pwd.getText().toString();
+                data = new JSONObject();
+                try {
+                    data.put("id",sroll);
+                    data.put("password",spwd);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
                 queue.add(objectRequest);
             }
         });
     }
 
     private void openActivity2() {
+
         Intent intent = new Intent(this,MainActivity2.class);
         startActivity(intent);
     }

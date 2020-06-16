@@ -46,9 +46,7 @@ public class MainActivity2 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
-        FloatingActionButton addbtn;
         text = (TextView) findViewById(R.id.bookedmsg);
-        addbtn=(FloatingActionButton) findViewById(R.id.addbtn);
         availablelist=(LinearLayout) findViewById(R.id.availablelist);
 
         String URL = "https://sport-resources-booking-api.herokuapp.com/ResourcesPresent";
@@ -89,18 +87,12 @@ public class MainActivity2 extends AppCompatActivity {
 
         queue.add(arrayRequest);
 
-        addbtn.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View v) {
-
-             }
-         });
 
     }
 
     private void add(LinearLayout list, Resource unit) {
         String r=unit.getResourceName();
-        String c="Count: "+unit.getCount().toString();
+        String c="Count: "+unit.getResourcesAvailable().toString()+"/"+unit.getCount().toString();
         LinearLayout resourceset=new LinearLayout(this);
         resourceset.setOrientation(LinearLayout.HORIZONTAL);
         resourceset.setBackground(getResources().getDrawable(R.drawable.lay_bg));
@@ -111,7 +103,8 @@ public class MainActivity2 extends AppCompatActivity {
         //resourceE1.setBackgroundColor(Color.RED);
         //resourceE2.setBackgroundColor(Color.GREEN);
         resourceE1.setPadding(40,30,0,20);
-        resourceE2.setGravity(Gravity.LEFT| Gravity.CENTER_VERTICAL);
+        resourceE2.setPadding(0,40,30,40);
+        resourceE1.setMinimumWidth(570);
         TextView tvResourse= new TextView(this);
         TextView tvCount= new TextView(this);
         Space space=new Space(this);

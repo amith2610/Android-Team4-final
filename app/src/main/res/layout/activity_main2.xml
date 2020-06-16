@@ -8,16 +8,17 @@
     tools:context=".MainActivity2"
     android:backgroundTint="#ffffff">
 
+
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="338dp"
         android:layout_height="310dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.403"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.77">
+        app:layout_constraintVertical_bias="0.812">
 
         <LinearLayout
             android:id="@+id/availablelist"
@@ -26,20 +27,6 @@
             android:layout_marginBottom="32sp"
             android:orientation="vertical" />
     </ScrollView>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/addbtn"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:backgroundTint="#EEEFED"
-        android:clickable="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.954"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.961"
-        app:srcCompat="@android:drawable/ic_input_add" />
 
     <TextView
         android:id="@+id/textView3"
@@ -93,4 +80,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.048" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
