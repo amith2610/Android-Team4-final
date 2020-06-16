@@ -5,18 +5,39 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Space;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class MainActivity2 extends AppCompatActivity {
+    static String accessTkn;
     static TextView text;
+    private RequestQueue queue;
+    JsonArrayRequest arrayRequest;
+    LinearLayout availablelist;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,10 +45,41 @@ public class MainActivity2 extends AppCompatActivity {
         FloatingActionButton addbtn;
         text = (TextView) findViewById(R.id.bookedmsg);
         addbtn=(FloatingActionButton) findViewById(R.id.addbtn);
-         final LinearLayout availablelist;
-         availablelist=(LinearLayout) findViewById(R.id.availablelist);
+        availablelist=(LinearLayout) findViewById(R.id.availablelist);
 
-         addbtn.setOnClickListener(new View.OnClickListener() {
+        String URL = "https://sport-resources-booking-api.herokuapp.com/ResourcesPresent";
+        queue = Volley.newRequestQueue(this);
+        arrayRequest = new JsonArrayRequest(Request.Method.GET,
+                URL,
+                null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        int len = response.length();
+                        for(int i=0;i<len;i++){
+                            add(availablelist);
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                        Toast toast = Toast.makeText(getApplicationContext(),error.toString(),Toast.LENGTH_LONG);
+                        toast.show();
+                    }
+                }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Authorization", "Bearer "+accessTkn);
+                return params;
+            }
+        };
+
+        queue.add(arrayRequest);
+
+        addbtn.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
                  add(availablelist);
