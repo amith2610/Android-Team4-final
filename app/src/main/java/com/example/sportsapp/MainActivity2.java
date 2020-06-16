@@ -16,13 +16,13 @@ import android.widget.TextView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainActivity2 extends AppCompatActivity {
-
+    static TextView text;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
         FloatingActionButton addbtn;
-
+        text = (TextView) findViewById(R.id.bookedmsg);
         addbtn=(FloatingActionButton) findViewById(R.id.addbtn);
          final LinearLayout availablelist;
          availablelist=(LinearLayout) findViewById(R.id.availablelist);
