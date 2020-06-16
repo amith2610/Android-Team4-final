@@ -40,6 +40,7 @@ public class MainActivity extends Activity {
     String sroll;
      String spwd;
      TextView textView6;
+    String URL = "https://sport-resources-booking-api.herokuapp.com/login";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +53,7 @@ public class MainActivity extends Activity {
         textView4=(TextView) findViewById(R.id.textView4);
         textView6=(TextView) findViewById(R.id.textView6);
 
-        String URL = "https://sport-resources-booking-api.herokuapp.com/login";
+        //String URL = "https://sport-resources-booking-api.herokuapp.com/login";
        /* data = new JSONObject();
         try {
             data.put("id",sroll);
@@ -63,34 +64,34 @@ public class MainActivity extends Activity {
 
 
         queue = Volley.newRequestQueue(this);
-        objectRequest = new JsonObjectRequest(Request.Method.POST,
-                URL,
-                data,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            MainActivity2.accessTkn = response.getString("access_token");
-                            textView4.setText(sroll);
-                            textView6.setText(data.toString());
+        /*objectRequest = new JsonObjectRequest(Request.Method.POST,
+                            URL,
+                            data,
+                            new Response.Listener<JSONObject>() {
+                                @Override
+                                public void onResponse(JSONObject response) {
+                                    try {
+                                        MainActivity2.accessTkn = response.getString("access_token");
+                                        textView4.setText(sroll);
+                                        textView6.setText(data.toString());
 
-                            openActivity2();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                                        openActivity2();
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
 
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
+                                }
+                            },
+                            new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
 
                         textView4.setText(sroll);
                         textView6.setText(data.toString());
                         Toast toast = Toast.makeText(getApplicationContext(),"Enter Valid Credentials",Toast.LENGTH_LONG);
                         toast.show();
                     }
-                });
+                });*/
 
         logbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,6 +106,34 @@ public class MainActivity extends Activity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                objectRequest = new JsonObjectRequest(Request.Method.POST,
+                        URL,
+                        data,
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                try {
+                                    MainActivity2.accessTkn = response.getString("access_token");
+                                    textView4.setText(sroll);
+                                    textView6.setText(data.toString());
+
+                                    openActivity2();
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+
+                                textView4.setText(sroll);
+                                textView6.setText(data.toString());
+                                Toast toast = Toast.makeText(getApplicationContext(),"Enter Valid Credentials",Toast.LENGTH_LONG);
+                                toast.show();
+                            }
+                        });
 
                 queue.add(objectRequest);
             }
