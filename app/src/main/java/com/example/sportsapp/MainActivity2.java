@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -109,7 +110,8 @@ public class MainActivity2 extends AppCompatActivity {
         //resourceE1.setBackgroundColor(Color.RED);
         //resourceE2.setBackgroundColor(Color.GREEN);
         resourceE1.setPadding(40,30,0,20);
-        resourceE2.setPadding(280,40,30,40);
+        resourceE2.setPadding(0,40,30,40);
+        resourceE1.setMinimumWidth(570);
         TextView tvResourse= new TextView(this);
         TextView tvCount= new TextView(this);
         Space space=new Space(this);
