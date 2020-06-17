@@ -28,10 +28,12 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -42,6 +44,10 @@ public class MainActivity2 extends AppCompatActivity {
     private RequestQueue queue;
     JsonArrayRequest arrayRequest;
     LinearLayout availablelist;
+    TextView bookedmsg;
+    int count=1;
+    JSONObject data;
+    private RequestQueue bookqueue;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,24 +96,24 @@ public class MainActivity2 extends AppCompatActivity {
 
     }
 
-    private void add(LinearLayout list, Resource unit) {
-        String r=unit.getResourceName();
-        String c="Count: "+unit.getResourcesAvailable().toString()+"/"+unit.getCount().toString();
-        LinearLayout resourceset=new LinearLayout(this);
+    private void add(LinearLayout list, final Resource unit) {
+        String r = unit.getResourceName();
+        String c = "Count: " + unit.getResourcesAvailable().toString() + "/" + unit.getCount().toString();
+        LinearLayout resourceset = new LinearLayout(this);
         resourceset.setOrientation(LinearLayout.HORIZONTAL);
         resourceset.setBackground(getResources().getDrawable(R.drawable.lay_bg));
         //resourceset.setPadding(18,32,18,32);
-        LinearLayout resourceE1=new LinearLayout(this);
+        LinearLayout resourceE1 = new LinearLayout(this);
         resourceE1.setOrientation(LinearLayout.VERTICAL);
-        LinearLayout resourceE2=new LinearLayout(this);
+        LinearLayout resourceE2 = new LinearLayout(this);
         //resourceE1.setBackgroundColor(Color.RED);
         //resourceE2.setBackgroundColor(Color.GREEN);
-        resourceE1.setPadding(40,30,0,20);
-        resourceE2.setPadding(0,40,30,40);
+        resourceE1.setPadding(40, 30, 0, 20);
+        resourceE2.setPadding(0, 40, 30, 40);
         resourceE1.setMinimumWidth(570);
-        TextView tvResourse= new TextView(this);
-        TextView tvCount= new TextView(this);
-        Space space=new Space(this);
+        TextView tvResourse = new TextView(this);
+        TextView tvCount = new TextView(this);
+        Space space = new Space(this);
         tvResourse.setText(r);
         tvResourse.setTextColor(Color.WHITE);
         tvResourse.setTextSize(18);
@@ -115,9 +121,16 @@ public class MainActivity2 extends AppCompatActivity {
         tvCount.setText(c);
         tvCount.setTextColor(Color.WHITE);
         tvCount.setTextSize(12);
-        TextView bookbtn=new TextView(this);
+        TextView bookbtn = new TextView(this);
         bookbtn.setText("Book");
-        bookbtn.setPadding(40,20,40,20);
+        bookbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                book(MainActivity.sroll,unit.getResourceId());
+
+            }
+        });
+        bookbtn.setPadding(40, 20, 40, 20);
         bookbtn.setBackground(getResources().getDrawable(R.drawable.btn_bg));
         //bookbtn.setBackgroundColor(Color.WHITE);
         bookbtn.setTextColor(getResources().getColor(R.color.layoutbg));
@@ -127,12 +140,59 @@ public class MainActivity2 extends AppCompatActivity {
         resourceset.addView(resourceE1);
         resourceset.addView(resourceE2);
         list.addView(resourceset);
-        list.addView(space,0,60);
-        list.setPadding(50,0,50,0);
+        list.addView(space, 0, 60);
+        list.setPadding(50, 0, 50, 0);
+        bookedmsg = (TextView) findViewById(R.id.bookedmsg);
+    }
+
+
+
+    private void book(String sroll, Integer resourceId) {
+        data=new JSONObject();
+        String URL1= "https://sport-resources-booking-api.herokuapp.com/bookResource";
+        bookqueue=Volley.newRequestQueue(this);
+        try {
+            data.put("user_id",sroll);
+            data.put("r_id",resourceId.toString());
+            data.put("day","2020-06-16");
+            data.put("reservation_time","13:00:00");
+            data.put("booking_time","13:10:00");
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JsonObjectRequest objectRequest=new JsonObjectRequest(Request.Method.POST,
+                URL1, data, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+
+                    text.setText("Booking Successful");
+
+
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                text.setText("Booking Failed");
+
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Authorization", "Bearer "+accessTkn);
+                return params;
+            }
+        };
+        bookqueue.add(objectRequest);
 
 
 
 
     }
+
 
 }

@@ -37,9 +37,9 @@ public class MainActivity extends Activity {
     TextView textView4;
     EditText roll;
     EditText pwd;
-    String sroll;
-     String spwd;
-     TextView textView6;
+    static String sroll;
+    String spwd;
+    TextView textView6;
     String URL = "https://sport-resources-booking-api.herokuapp.com/login";
 
     @Override
