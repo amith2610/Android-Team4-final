@@ -126,7 +126,7 @@ public class MainActivity2 extends AppCompatActivity {
         bookbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                book(MainActivity.sroll,unit.getResourceId());
+                book(MainActivity.sroll,unit.getResourceName());
 
             }
         });
@@ -147,13 +147,13 @@ public class MainActivity2 extends AppCompatActivity {
 
 
 
-    private void book(String sroll, Integer resourceId) {
+    private void book(String sroll, String resourceName) {
         data=new JSONObject();
         String URL1= "https://sport-resources-booking-api.herokuapp.com/bookResource";
         bookqueue=Volley.newRequestQueue(this);
         try {
             data.put("user_id",sroll);
-            data.put("r_id",resourceId.toString());
+            data.put("resource_name",resourceName);
             data.put("day","2020-06-16");
             data.put("reservation_time","13:00:00");
             data.put("booking_time","13:10:00");
