@@ -7,6 +7,17 @@
     android:background="#EEF8F7"
     tools:context=".MainActivity2"
     android:backgroundTint="#ffffff">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/background_3"
+        android:scaleType="centerCrop">
+    </ImageView>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="#7A474747">
+    </ImageView>
 
 
     <ScrollView
@@ -33,7 +44,7 @@
         android:layout_width="248dp"
         android:layout_height="42dp"
         android:text="Available"
-        android:textColor="#686666"
+        android:textColor="#8A8A8A"
         android:textSize="30sp"
         android:typeface="serif"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -60,8 +71,10 @@
             android:id="@+id/bookedmsg"
             android:layout_width="350dp"
             android:layout_height="64dp"
-            android:paddingTop="25sp"
+            android:paddingTop="30sp"
+            android:textColor="#fff"
             android:text="You have no bookings"
+            android:textStyle="bold"
             android:textAlignment="center" />
     </LinearLayout>
 
@@ -71,7 +84,7 @@
         android:layout_width="211dp"
         android:layout_height="37dp"
         android:text="Booked"
-        android:textColor="#686666"
+        android:textColor="#7A7A7A"
         android:textSize="30sp"
         android:typeface="serif"
         app:layout_constraintBottom_toBottomOf="parent"

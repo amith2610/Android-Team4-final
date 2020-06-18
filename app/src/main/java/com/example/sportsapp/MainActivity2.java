@@ -42,6 +42,7 @@ import java.util.Map;
 
 public class MainActivity2 extends AppCompatActivity {
     static String accessTkn;
+    String aT;
     static TextView text;
     private RequestQueue queue;
     JsonArrayRequest arrayRequest;
@@ -178,21 +179,21 @@ public class MainActivity2 extends AppCompatActivity {
                     text.setText("Booking Successful");
 
 
-
-
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 text.setText(error.toString());
+                Toast toast=Toast.makeText(getApplicationContext(),"Booking Unsuccesful",Toast.LENGTH_SHORT);
+                toast.show();
 
             }
         }){
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headerMap = new HashMap<String, String>();
-                headerMap.put("Authorization", "Bearer "+accessTkn);
-                return headerMap;
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Authorization", "Bearer "+accessTkn);
+                return params;
             }
         };
         bookqueue.add(objectRequest);

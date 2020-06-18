@@ -35,32 +35,18 @@
                     android:id="@+id/textView2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="CBIT"
+                    android:fontFamily="@font/astloch_bold"
+                    android:text="Chaitanya Bharathi Institute of  Technology"
                     android:textAlignment="center"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="52sp"
-                    android:typeface="serif"
+                    android:textColor="#FBFBFB"
+                    android:textSize="40sp"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.454"
+                    app:layout_constraintHorizontal_bias="0.496"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.137" />
-
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="104dp"
-                    android:layout_height="58dp"
-                    android:fontFamily="@font/acme"
-                    android:text="Login"
-                    android:textColor="#4a4a4a"
-                    android:textSize="38sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.478"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.415" />
+                    app:layout_constraintVertical_bias="0.136" />
 
                 <EditText
                     android:id="@+id/roll"
