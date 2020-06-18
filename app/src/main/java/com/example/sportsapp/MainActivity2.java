@@ -5,17 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Space;
 import android.widget.TextView;
 import android.widget.Toast;
-
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -25,15 +19,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -43,19 +34,28 @@ import java.util.Map;
 public class MainActivity2 extends AppCompatActivity {
     static String accessTkn;
     static TextView text;
+
     private RequestQueue queue;
     JsonArrayRequest arrayRequest;
     LinearLayout availablelist;
+    LinearLayout bookedlist;
     TextView bookedmsg;
-    int count=1;
     JSONObject data;
     private RequestQueue bookqueue;
+    TextView text3;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+
+        bookedlist = (LinearLayout) findViewById(R.id.bookedlist);
         text = (TextView) findViewById(R.id.bookedmsg);
         availablelist=(LinearLayout) findViewById(R.id.availablelist);
+        text3 = (TextView) findViewById(R.id.textView3);
+
+
+        Booked();
 
         String URL = "https://sport-resources-booking-api.herokuapp.com/ResourcesPresent";
         queue = Volley.newRequestQueue(this);
@@ -98,13 +98,63 @@ public class MainActivity2 extends AppCompatActivity {
 
     }
 
+    private void Booked() {
+        JSONObject id_bookingLog = new JSONObject();
+
+        try {
+            id_bookingLog.put("id",MainActivity.sroll);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JSONArray ja = new JSONArray();
+        ja.put(id_bookingLog);
+
+
+        RequestQueue queue_bookingLog;
+
+        String URL_bookingLog = "https://sport-resources-booking-api.herokuapp.com/userBookingslog";
+
+        queue_bookingLog = Volley.newRequestQueue(this);
+
+        JsonArrayRequest arrayRequest_bookingLog = new JsonArrayRequest(Request.Method.GET,
+                id_bookingLog,
+                ja,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+
+
+
+                        }
+
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+
+                    }
+                }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Authorization", "Bearer " + accessTkn);
+                return params;
+            }
+        };
+        queue_bookingLog.add(arrayRequest_bookingLog);
+
+
+    }
+
     private void add(LinearLayout list, final Resource unit) {
         String r = unit.getResourceName();
         String c = "Count: " + unit.getResourcesAvailable().toString() + "/" + unit.getCount().toString();
         LinearLayout resourceset = new LinearLayout(this);
         resourceset.setOrientation(LinearLayout.HORIZONTAL);
         resourceset.setBackground(getResources().getDrawable(R.drawable.lay_bg));
-        //resourceset.setPadding(18,32,18,32);
+        resourceset.setPadding(18,32,18,32);
         LinearLayout resourceE1 = new LinearLayout(this);
         resourceE1.setOrientation(LinearLayout.VERTICAL);
         LinearLayout resourceE2 = new LinearLayout(this);
@@ -149,22 +199,24 @@ public class MainActivity2 extends AppCompatActivity {
 
 
 
-    private void book(String sroll, final String resourceName) {
+    private void book(String sroll, String resourceName) {
         data=new JSONObject();
         String URL1= "https://sport-resources-booking-api.herokuapp.com/bookResource";
+        bookqueue=Volley.newRequestQueue(this);
+
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String date = sdf.format(new Date());
 
 
         SimpleDateFormat sd = new SimpleDateFormat("HH:mm:ss");
         String time = sd.format(new Date());
-        bookqueue=Volley.newRequestQueue(this);
+
+
         try {
             data.put("id",sroll);
             data.put("name",resourceName);
-            data.put("day",date);
-            data.put("reservation_time","14:30:00");
-
+            data.put("day", date);
+            data.put("reservation_time","12:10:00");
 
 
         } catch (JSONException e) {
@@ -175,7 +227,7 @@ public class MainActivity2 extends AppCompatActivity {
             @Override
             public void onResponse(JSONObject response) {
 
-                    text.setText("Booking Successful");
+                text.setText("Booking Successful");
 
 
 
@@ -190,9 +242,9 @@ public class MainActivity2 extends AppCompatActivity {
         }){
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headerMap = new HashMap<String, String>();
-                headerMap.put("Authorization", "Bearer "+accessTkn);
-                return headerMap;
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Authorization", "Bearer "+accessTkn);
+                return params;
             }
         };
         bookqueue.add(objectRequest);
