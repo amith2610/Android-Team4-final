@@ -35,6 +35,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -147,16 +149,22 @@ public class MainActivity2 extends AppCompatActivity {
 
 
 
-    private void book(String sroll, String resourceName) {
+    private void book(String sroll, final String resourceName) {
         data=new JSONObject();
         String URL1= "https://sport-resources-booking-api.herokuapp.com/bookResource";
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String date = sdf.format(new Date());
+
+
+        SimpleDateFormat sd = new SimpleDateFormat("HH:mm:ss");
+        String time = sd.format(new Date());
         bookqueue=Volley.newRequestQueue(this);
         try {
-            data.put("user_id",sroll);
-            data.put("resource_name",resourceName);
-            data.put("day","2020-06-16");
-            data.put("reservation_time","13:00:00");
-            data.put("booking_time","13:10:00");
+            data.put("id",sroll);
+            data.put("name",resourceName);
+            data.put("day",date);
+            data.put("reservation_time","14:30:00");
+
 
 
         } catch (JSONException e) {
@@ -176,15 +184,15 @@ public class MainActivity2 extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                text.setText("Booking Failed");
+                text.setText(error.toString());
 
             }
         }){
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("Authorization", "Bearer "+accessTkn);
-                return params;
+                Map<String, String> headerMap = new HashMap<String, String>();
+                headerMap.put("Authorization", "Bearer "+accessTkn);
+                return headerMap;
             }
         };
         bookqueue.add(objectRequest);

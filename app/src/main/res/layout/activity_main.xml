@@ -53,7 +53,7 @@
                     android:layout_height="58dp"
                     android:fontFamily="@font/acme"
                     android:text="Login"
-                    android:textColor=""
+                    android:textColor="#4a4a4a"
                     android:textSize="38sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
