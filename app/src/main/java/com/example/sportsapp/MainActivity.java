@@ -34,12 +34,10 @@ public class MainActivity extends Activity {
     JsonObjectRequest objectRequest;
     JsonArrayRequest arrayRequest;
     JSONObject data;
-    TextView textView4;
     EditText roll;
     EditText pwd;
     static String sroll;
     String spwd;
-    TextView textView6;
     String URL = "https://sport-resources-booking-api.herokuapp.com/login";
 
     @Override
@@ -50,8 +48,7 @@ public class MainActivity extends Activity {
         Button logbtn = (Button) findViewById(R.id.logbtn);
          roll=(EditText) findViewById(R.id.roll);
          pwd=(EditText) findViewById(R.id.pwd);
-        textView4=(TextView) findViewById(R.id.textView4);
-        textView6=(TextView) findViewById(R.id.textView6);
+
 
         //String URL = "https://sport-resources-booking-api.herokuapp.com/login";
        /* data = new JSONObject();
@@ -114,8 +111,7 @@ public class MainActivity extends Activity {
                             public void onResponse(JSONObject response) {
                                 try {
                                     MainActivity2.accessTkn = response.getString("access_token");
-                                    textView4.setText(sroll);
-                                    textView6.setText(data.toString());
+
 
                                     openActivity2();
                                 } catch (JSONException e) {
@@ -128,8 +124,7 @@ public class MainActivity extends Activity {
                             @Override
                             public void onErrorResponse(VolleyError error) {
 
-                                textView4.setText(sroll);
-                                textView6.setText(data.toString());
+
                                 Toast toast = Toast.makeText(getApplicationContext(),"Enter Valid Credentials",Toast.LENGTH_LONG);
                                 toast.show();
                             }
