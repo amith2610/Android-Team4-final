@@ -44,6 +44,8 @@ public class MainActivity2 extends AppCompatActivity {
     JSONObject data;
     private RequestQueue bookqueue;
     TextView text3;
+    JSONObject testJSON;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +58,7 @@ public class MainActivity2 extends AppCompatActivity {
         text3 = (TextView) findViewById(R.id.textView3);
 
 
-        Booked();
+
 
         String URL = "https://sport-resources-booking-api.herokuapp.com/ResourcesPresent";
         queue = Volley.newRequestQueue(this);
@@ -95,6 +97,8 @@ public class MainActivity2 extends AppCompatActivity {
         };
 
         queue.add(arrayRequest);
+        testJSON= new JSONObject();
+
 
 
     }
@@ -108,8 +112,8 @@ public class MainActivity2 extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        JSONArray ja = new JSONArray();
-        ja.put(id_bookingLog);
+        //JSONArray ja = new JSONArray();
+        //ja.put(id_bookingLog);
 
 
         RequestQueue queue_bookingLog;
@@ -118,14 +122,15 @@ public class MainActivity2 extends AppCompatActivity {
 
         queue_bookingLog = Volley.newRequestQueue(this);
 
-        JsonArrayRequest arrayRequest_bookingLog = new JsonArrayRequest(Request.Method.GET,
+        JsonObjectRequest objectRequest_bookingLog = new JsonObjectRequest(Request.Method.GET,
+                URL_bookingLog,
                 id_bookingLog,
-                ja,
-                new Response.Listener<JSONArray>() {
+                new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(JSONArray response) {
+                    public void onResponse(JSONObject response) {
 
-
+                        text3.setText(response.toString());
+                        testJSON=response;
 
                         }
 
@@ -134,7 +139,7 @@ public class MainActivity2 extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
 
-
+                        text3.setText(testJSON.toString());
                     }
                 }) {
             @Override
@@ -144,7 +149,7 @@ public class MainActivity2 extends AppCompatActivity {
                 return params;
             }
         };
-        queue_bookingLog.add(arrayRequest_bookingLog);
+        queue_bookingLog.add(objectRequest_bookingLog);
 
 
     }
@@ -163,7 +168,7 @@ public class MainActivity2 extends AppCompatActivity {
         //resourceE2.setBackgroundColor(Color.GREEN);
         resourceE1.setPadding(40, 30, 0, 20);
         resourceE2.setPadding(0, 40, 30, 40);
-        resourceE1.setMinimumWidth(570);
+        resourceE1.setMinimumWidth(550);
         TextView tvResourse = new TextView(this);
         TextView tvCount = new TextView(this);
         Space space = new Space(this);
@@ -180,6 +185,7 @@ public class MainActivity2 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 book(MainActivity.sroll,unit.getResourceName());
+                Booked();
 
             }
         });

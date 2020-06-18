@@ -41,11 +41,11 @@
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="248dp"
-        android:layout_height="42dp"
+        android:layout_width="401dp"
+        android:layout_height="39dp"
         android:text="Available"
-        android:textColor="#8A8A8A"
-        android:textSize="30sp"
+        android:textColor="#686666"
+        android:textSize="22sp"
         android:typeface="serif"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
