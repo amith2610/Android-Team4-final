@@ -182,7 +182,7 @@ public class MainActivity2 extends AppCompatActivity {
         //resourceE2.setBackgroundColor(Color.GREEN);
         resourceE1.setPadding(40, 30, 0, 20);
         resourceE2.setPadding(0, 40, 30, 40);
-        //resourceE1.setMinimumWidth(550);
+        resourceE1.setMinimumWidth(550);
         TextView tvResourse = new TextView(this);
         TextView tvCount = new TextView(this);
         Space space = new Space(this);
@@ -204,13 +204,7 @@ public class MainActivity2 extends AppCompatActivity {
 
                 }
                 else {
-                    if (bookPress==0){
-                        book(MainActivity.sroll,unit.getResourceName());
-
-                    }
-                    else{
-                        Toast.makeText(getApplicationContext(),"BOOKING UNSUCCESSFUL",Toast.LENGTH_LONG).show();
-                    }
+                   book(MainActivity.sroll,unit.getResourceName());
 
                 }
 
