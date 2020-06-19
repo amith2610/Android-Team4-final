@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.nfc.Tag;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Space;
@@ -44,7 +46,10 @@ public class MainActivity2 extends AppCompatActivity {
     JSONObject data;
     private RequestQueue bookqueue;
     TextView text3;
-    JSONObject testJSON;
+    TextView text5;
+    Boolean value;
+    int bookPress;
+    BookedResource userBookedData;
 
 
     @Override
@@ -55,7 +60,13 @@ public class MainActivity2 extends AppCompatActivity {
         bookedlist = (LinearLayout) findViewById(R.id.bookedlist);
         text = (TextView) findViewById(R.id.bookedmsg);
         availablelist=(LinearLayout) findViewById(R.id.availablelist);
+        userBookedData = new BookedResource();
+
+
+
+
         text3 = (TextView) findViewById(R.id.textView3);
+        text5 = (TextView) findViewById(R.id.textView5);
 
 
 
@@ -120,16 +131,23 @@ public class MainActivity2 extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
 
-                        text3.setText(response.toString());
 
-                        }
+                        value = true;
+                        GsonBuilder gsonBuilder = new GsonBuilder();
+                        Gson gson = gsonBuilder.create();
+                        userBookedData = gson.fromJson(String.valueOf(response),
+                                BookedResource.class);
+                        text.setText(userBookedData.getResourceName());
+
+                    }
 
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
 
-                        text3.setText(error.toString());
+                        value = false;
+
                     }
                 }) {
             @Override
@@ -141,7 +159,7 @@ public class MainActivity2 extends AppCompatActivity {
             @Override
             public Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                params.put("id", "160118733012");
+                params.put("id", MainActivity.sroll);
                 return params;
             }
         };
@@ -164,7 +182,7 @@ public class MainActivity2 extends AppCompatActivity {
         //resourceE2.setBackgroundColor(Color.GREEN);
         resourceE1.setPadding(40, 30, 0, 20);
         resourceE2.setPadding(0, 40, 30, 40);
-        resourceE1.setMinimumWidth(550);
+        //resourceE1.setMinimumWidth(550);
         TextView tvResourse = new TextView(this);
         TextView tvCount = new TextView(this);
         Space space = new Space(this);
@@ -180,10 +198,25 @@ public class MainActivity2 extends AppCompatActivity {
         bookbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                book(MainActivity.sroll,unit.getResourceName());
+
+                if (value){
+                    Toast.makeText(getApplicationContext(),"BOOKING UNSUCCESSFUL",Toast.LENGTH_LONG).show();
+
+                }
+                else {
+                    if (bookPress==0){
+                        book(MainActivity.sroll,unit.getResourceName());
+
+                    }
+                    else{
+                        Toast.makeText(getApplicationContext(),"BOOKING UNSUCCESSFUL",Toast.LENGTH_LONG).show();
+                    }
+
+                }
+
+                }
 
 
-            }
         });
         bookbtn.setPadding(40, 20, 40, 20);
         bookbtn.setBackground(getResources().getDrawable(R.drawable.btn_bg));
@@ -203,30 +236,39 @@ public class MainActivity2 extends AppCompatActivity {
 
 
     private void book(final String sroll, final String resourceName) {
-        data=new JSONObject();
-        String URL1= "https://sport-resources-booking-api.herokuapp.com/bookResource";
-        bookqueue=Volley.newRequestQueue(this);
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         final String date = sdf.format(new Date());
-
-
         SimpleDateFormat sd = new SimpleDateFormat("HH:mm:ss");
         String time = sd.format(new Date());
 
 
+
+
+
+
+
+        JSONObject bookingDetails = new JSONObject();
+
         try {
-            data.put("id","160118733012");
-            data.put("name","Basket Balls");
-            data.put("day", "2020-06-19");
-            data.put("reservation_time","12:10:00");
-
-
+            bookingDetails.put("id",sroll);
+            bookingDetails.put("name",resourceName);
+            bookingDetails.put("day",date);
+            bookingDetails.put("reservation_time", "12:10:00");
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        String URL1= "https://sport-resources-booking-api.herokuapp.com/bookResource";
+        bookqueue=Volley.newRequestQueue(this);
+
+
+
+
         JsonObjectRequest objectRequest=new JsonObjectRequest(Request.Method.POST,
-                URL1, data, new Response.Listener<JSONObject>() {
+                URL1,
+                bookingDetails,
+                new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
 
@@ -237,9 +279,21 @@ public class MainActivity2 extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                text.setText(error.toString());
-                Toast toast=Toast.makeText(getApplicationContext(),"Booking Unsuccessful",Toast.LENGTH_SHORT);
-                toast.show();
+//                if (value || bookPress==1) {
+//
+//                    Toast.makeText(getApplicationContext(),"BOOKING UNSUCCESSFUL",Toast.LENGTH_LONG).show();
+//                    if (bookPress==0){
+//                        bookPress+=1;
+//                    }
+//                    }
+//                else {
+//                    Toast.makeText(getApplicationContext(),"BOOKING SUCCESSFUL",Toast.LENGTH_LONG).show();
+//                }
+
+                Toast.makeText(getApplicationContext(),"BOOKING SUCCESSFUL",Toast.LENGTH_LONG).show();
+                Booked();
+
+
 
             }
         }){
@@ -250,14 +304,17 @@ public class MainActivity2 extends AppCompatActivity {
                 return params;
             }
             @Override
-            public Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
-                params.put("id",sroll);
-                params.put("name",resourceName);
-                params.put("day", date);
-                params.put("reservation_time","12:10:00");
-                return params;
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                    Map<String, String> map = new HashMap<String, String>();
+                    map.put("id",sroll);
+                    map.put("name",resourceName);
+                    map.put("day",date);
+                    map.put("reservation_time","12:10:00");
+                    return map;
             }
+
+
         };
         bookqueue.add(objectRequest);
 
