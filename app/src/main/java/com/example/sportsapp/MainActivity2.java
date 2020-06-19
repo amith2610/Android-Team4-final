@@ -35,7 +35,7 @@ public class MainActivity2 extends AppCompatActivity {
     static String accessTkn;
     String aT;
     static TextView text;
-
+    static JSONObject idBookingLog;
     private RequestQueue queue;
     JsonArrayRequest arrayRequest;
     LinearLayout availablelist;
@@ -97,40 +97,30 @@ public class MainActivity2 extends AppCompatActivity {
         };
 
         queue.add(arrayRequest);
-        testJSON= new JSONObject();
-
+        Booked();
 
 
     }
 
     private void Booked() {
-        JSONObject id_bookingLog = new JSONObject();
+        idBookingLog = new JSONObject();
 
         try {
-            id_bookingLog.put("id",MainActivity.sroll);
+            idBookingLog.put("id",MainActivity.sroll);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        //JSONArray ja = new JSONArray();
-        //ja.put(id_bookingLog);
-
-
-        RequestQueue queue_bookingLog;
-
         String URL_bookingLog = "https://sport-resources-booking-api.herokuapp.com/userBookingslog";
 
-        queue_bookingLog = Volley.newRequestQueue(this);
-
-        JsonObjectRequest objectRequest_bookingLog = new JsonObjectRequest(Request.Method.GET,
+        JsonObjectRequest objectRequest_bookingLog = new JsonObjectRequest(Request.Method.POST,
                 URL_bookingLog,
-                id_bookingLog,
+                idBookingLog,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
 
                         text3.setText(response.toString());
-                        testJSON=response;
 
                         }
 
@@ -139,7 +129,7 @@ public class MainActivity2 extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
 
-                        text3.setText(testJSON.toString());
+                        text3.setText(error.toString());
                     }
                 }) {
             @Override
@@ -148,8 +138,14 @@ public class MainActivity2 extends AppCompatActivity {
                 params.put("Authorization", "Bearer " + accessTkn);
                 return params;
             }
+            @Override
+            public Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("id", "160118733012");
+                return params;
+            }
         };
-        queue_bookingLog.add(objectRequest_bookingLog);
+        queue.add(objectRequest_bookingLog);
 
 
     }
@@ -185,7 +181,7 @@ public class MainActivity2 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 book(MainActivity.sroll,unit.getResourceName());
-                Booked();
+
 
             }
         });
@@ -206,13 +202,13 @@ public class MainActivity2 extends AppCompatActivity {
 
 
 
-    private void book(String sroll, String resourceName) {
+    private void book(final String sroll, final String resourceName) {
         data=new JSONObject();
         String URL1= "https://sport-resources-booking-api.herokuapp.com/bookResource";
         bookqueue=Volley.newRequestQueue(this);
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String date = sdf.format(new Date());
+        final String date = sdf.format(new Date());
 
 
         SimpleDateFormat sd = new SimpleDateFormat("HH:mm:ss");
@@ -220,9 +216,9 @@ public class MainActivity2 extends AppCompatActivity {
 
 
         try {
-            data.put("id",sroll);
-            data.put("name",resourceName);
-            data.put("day", date);
+            data.put("id","160118733012");
+            data.put("name","Basket Balls");
+            data.put("day", "2020-06-19");
             data.put("reservation_time","12:10:00");
 
 
@@ -242,7 +238,7 @@ public class MainActivity2 extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 text.setText(error.toString());
-                Toast toast=Toast.makeText(getApplicationContext(),"Booking Unsuccesful",Toast.LENGTH_SHORT);
+                Toast toast=Toast.makeText(getApplicationContext(),"Booking Unsuccessful",Toast.LENGTH_SHORT);
                 toast.show();
 
             }
@@ -251,6 +247,15 @@ public class MainActivity2 extends AppCompatActivity {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("Authorization", "Bearer "+accessTkn);
+                return params;
+            }
+            @Override
+            public Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("id",sroll);
+                params.put("name",resourceName);
+                params.put("day", date);
+                params.put("reservation_time","12:10:00");
                 return params;
             }
         };
