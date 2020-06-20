@@ -204,18 +204,18 @@ public class MainActivity2 extends AppCompatActivity {
 
                 }
                 else {
-<<<<<<< HEAD
+
 
                         book(MainActivity.sroll,unit.getResourceName());
 
                     }
-=======
+
                    book(MainActivity.sroll,unit.getResourceName());
 
                 }
->>>>>>> 2378129e51bc02e9c0babbe45cd95ec530fb7cdf
 
-                }
+
+
 
 
         });
@@ -244,18 +244,12 @@ public class MainActivity2 extends AppCompatActivity {
         String time = sd.format(new Date());
 
 
-<<<<<<< HEAD
-        JSONObject bookingDetails = new JSONObject();
-
-=======
-
-
-
-
 
         JSONObject bookingDetails = new JSONObject();
 
->>>>>>> 2378129e51bc02e9c0babbe45cd95ec530fb7cdf
+
+
+
         try {
             bookingDetails.put("id",sroll);
             bookingDetails.put("name",resourceName);
@@ -275,13 +269,12 @@ public class MainActivity2 extends AppCompatActivity {
                 URL1,
                 bookingDetails,
                 new Response.Listener<JSONObject>() {
-<<<<<<< HEAD
-                    @Override
-                    public void onResponse(JSONObject response) {
-=======
+
+
+
             @Override
             public void onResponse(JSONObject response) {
->>>>>>> 2378129e51bc02e9c0babbe45cd95ec530fb7cdf
+
 
                         text.setText("Booking Successful");
 
@@ -317,21 +310,16 @@ public class MainActivity2 extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
 
-<<<<<<< HEAD
+
                 Map<String, String> map = new HashMap<String, String>();
                 map.put("id",sroll);
                 map.put("name",resourceName);
                 map.put("day",date);
                 map.put("reservation_time","12:10:00");
                 return map;
-=======
-                    Map<String, String> map = new HashMap<String, String>();
-                    map.put("id",sroll);
-                    map.put("name",resourceName);
-                    map.put("day",date);
-                    map.put("reservation_time","12:10:00");
-                    return map;
->>>>>>> 2378129e51bc02e9c0babbe45cd95ec530fb7cdf
+
+
+
             }
 
 
