@@ -135,9 +135,11 @@ public class MainActivity2 extends AppCompatActivity {
                         value = true;
                         GsonBuilder gsonBuilder = new GsonBuilder();
                         Gson gson = gsonBuilder.create();
-                        userBookedData = gson.fromJson(String.valueOf(response),
+                        BookedResource userBookedData = gson.fromJson(String.valueOf(response),
                                 BookedResource.class);
                         text.setText(userBookedData.getResourceName());
+                        text.setTypeface(Typeface.SERIF);
+                        text.setTextSize(19);
 
                     }
 
