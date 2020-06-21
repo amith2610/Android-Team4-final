@@ -206,11 +206,18 @@ public class MainActivity2 extends AppCompatActivity {
 
                 }
                 else {
+
+
+                        book(MainActivity.sroll,unit.getResourceName());
+
+                    }
+
                    book(MainActivity.sroll,unit.getResourceName());
 
                 }
 
-                }
+
+
 
 
         });
@@ -240,11 +247,10 @@ public class MainActivity2 extends AppCompatActivity {
 
 
 
-
-
-
-
         JSONObject bookingDetails = new JSONObject();
+
+
+
 
         try {
             bookingDetails.put("id",sroll);
@@ -265,14 +271,18 @@ public class MainActivity2 extends AppCompatActivity {
                 URL1,
                 bookingDetails,
                 new Response.Listener<JSONObject>() {
+
+
+
             @Override
             public void onResponse(JSONObject response) {
 
-                text.setText("Booking Successful");
+
+                        text.setText("Booking Successful");
 
 
-            }
-        }, new Response.ErrorListener() {
+                    }
+                }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
 //                if (value || bookPress==1) {
@@ -302,12 +312,16 @@ public class MainActivity2 extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
 
-                    Map<String, String> map = new HashMap<String, String>();
-                    map.put("id",sroll);
-                    map.put("name",resourceName);
-                    map.put("day",date);
-                    map.put("reservation_time","12:10:00");
-                    return map;
+
+                Map<String, String> map = new HashMap<String, String>();
+                map.put("id",sroll);
+                map.put("name",resourceName);
+                map.put("day",date);
+                map.put("reservation_time","12:10:00");
+                return map;
+
+
+
             }
 
 
