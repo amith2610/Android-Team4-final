@@ -1,12 +1,17 @@
 package com.example.sportsapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Space;
@@ -111,6 +116,27 @@ public class MainActivity2 extends AppCompatActivity {
         Booked();
 
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater=getMenuInflater();
+        inflater.inflate(R.menu.menu,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.history:
+                openActivity3();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+    public void openActivity3() {
+        Intent intent = new Intent(this,MainActivity3.class);
+        startActivity(intent);
     }
 
     private void Booked() {
