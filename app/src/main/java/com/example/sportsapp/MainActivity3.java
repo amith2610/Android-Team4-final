@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Space;
@@ -22,6 +23,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,15 +33,13 @@ public class MainActivity3 extends AppCompatActivity {
     private RequestQueue queueB;
     LinearLayout bookedhistorylist;
     BookedResource[] currentUserBookedHistory, bookedResources;
-
-
+    TextView tv4;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main3);
         bookedhistorylist = (LinearLayout) findViewById(R.id.bookedhistorylist);
-
-
+        tv4 = (TextView) findViewById(R.id.textView4);
         queueB = Volley.newRequestQueue(this);
         String URLB = "https://sport-resources-booking-api.herokuapp.com/allBookings";
         arrayRequestB = new JsonArrayRequest(Request.Method.GET,
@@ -49,24 +49,33 @@ public class MainActivity3 extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONArray response) {
 
-                        String newResponse = response.toString();
-                        GsonBuilder gsonBuilder = new GsonBuilder();
-                        Gson gson = gsonBuilder.create();
-                        bookedResources = gson.fromJson(newResponse, BookedResource[].class);
+//                        String newResponse = response.toString();
+//                        GsonBuilder gsonBuilder = new GsonBuilder();
+//                        Gson gson = gsonBuilder.create();
+//                        bookedResources = gson.fromJson(newResponse, BookedResource[].class);
                         int len = response.length();
-                        int currLen = 0;
-                        currentUserBookedHistory = new BookedResource[len];
+//                        int currLen = 0;
+//                        currentUserBookedHistory = new BookedResource[len];
+                        for(int i=0;i<len;i++) {
+                            try {
+                                Log.d("PkThop",response.getJSONObject(i).getString("user_id"));
+                                if(response.getJSONObject(i).getString("user_id").trim().equals("160118733012")){
+                                    tv4.setText(tv4.getText().toString()+"\n"+response.getJSONObject(i).getString("resource_name")+" "+response.getJSONObject(i).getString("day"));
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
 //                        for(int i=0;i<len;i++) {
-//                            if(bookedResources[i].getUserId() == MainActivity.sroll){
-//                                currentUserBookedHistory[currLen] = bookedResources[i];
-//                                currLen+=1;
-//                            }
-//                        }
+////                            if(bookedResources[i].getUserId() == MainActivity.sroll){
+////                                currentUserBookedHistory[currLen] = bookedResources[i];
+////                                currLen+=1;
+////                            }
+////                        }
 //                        for (int k=0;k<currLen;k++){
 //                            add(bookedhistorylist);
 //                        }
-                        add(bookedhistorylist, bookedResources, len);
-
+//                        add(bookedhistorylist, bookedResources, len);
 
                     }
                 },
@@ -98,7 +107,7 @@ public class MainActivity3 extends AppCompatActivity {
             TextView tv1 = new TextView(this);
             tv1.setText(roll);
             bookedhistorylist.addView(tv1);
-            if (roll =="160119733103") {
+            if (roll.equals("160119733103")) {
                 TextView tv = new TextView(this);
                 tv.setText(roll);
                 bookedhistorylist.addView(tv);
