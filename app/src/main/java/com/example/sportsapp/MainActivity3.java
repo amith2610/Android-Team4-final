@@ -30,7 +30,7 @@ public class MainActivity3 extends AppCompatActivity {
     JsonArrayRequest arrayRequestB;
     private RequestQueue queueB;
     LinearLayout bookedhistorylist;
-    
+    BookedResource[] currentUserBookedHistory, bookedResources;
 
 
     @Override
@@ -41,7 +41,7 @@ public class MainActivity3 extends AppCompatActivity {
 
 
         queueB = Volley.newRequestQueue(this);
-        String URLB =  "https://sport-resources-booking-api.herokuapp.com/allBookings";
+        String URLB = "https://sport-resources-booking-api.herokuapp.com/allBookings";
         arrayRequestB = new JsonArrayRequest(Request.Method.GET,
                 URLB,
                 null,
@@ -52,19 +52,20 @@ public class MainActivity3 extends AppCompatActivity {
                         String newResponse = response.toString();
                         GsonBuilder gsonBuilder = new GsonBuilder();
                         Gson gson = gsonBuilder.create();
-                        BookedResource[] bookedResources = gson.fromJson(newResponse,BookedResource[].class);
+                        bookedResources = gson.fromJson(newResponse, BookedResource[].class);
                         int len = response.length();
-                        for(int i=0;i<len;i++) {
-
-                            add(bookedhistorylist,
-                                    bookedResources[i].getUserId(),
-                                    bookedResources[i].getResourceName(),
-                                    bookedResources[i].getDay(),
-                                    bookedResources[i].getStatus(),
-                                    bookedResources[i].getReturnDay());
-
-                        }
-
+                        int currLen = 0;
+                        currentUserBookedHistory = new BookedResource[len];
+//                        for(int i=0;i<len;i++) {
+//                            if(bookedResources[i].getUserId() == MainActivity.sroll){
+//                                currentUserBookedHistory[currLen] = bookedResources[i];
+//                                currLen+=1;
+//                            }
+//                        }
+//                        for (int k=0;k<currLen;k++){
+//                            add(bookedhistorylist);
+//                        }
+                        add(bookedhistorylist, bookedResources, len);
 
 
                     }
@@ -74,65 +75,74 @@ public class MainActivity3 extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
 
 
-                        Toast toast = Toast.makeText(getApplicationContext(),error.toString(),Toast.LENGTH_LONG);
+                        Toast toast = Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_LONG);
                         toast.show();
                     }
-                }){
+                }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("Authorization", "Bearer "+MainActivity2.accessTkn);
+                params.put("Authorization", "Bearer " + MainActivity2.accessTkn);
                 return params;
             }
         };
         queueB.add(arrayRequestB);
 
 
-
     }
 
 
-
-
-    private void add(LinearLayout bookedhistorylist, String userId, String resourceName, String day, Integer status, Object returnDay) {
-        String r = "resource";
-        String c = "date";
-        LinearLayout bookedset = new LinearLayout(this);
-        bookedset.setOrientation(LinearLayout.HORIZONTAL);
-        bookedset.setBackground(getResources().getDrawable(R.drawable.lay_bg));
-        bookedset.setPadding(18,32,18,32);
-        LinearLayout bookedE1 = new LinearLayout(this);
-        bookedE1.setOrientation(LinearLayout.VERTICAL);
-        LinearLayout bookedE2 = new LinearLayout(this);
-        //resourceE1.setBackgroundColor(Color.RED);
-        //resourceE2.setBackgroundColor(Color.GREEN);
-        bookedE1.setPadding(40, 30, 0, 20);
-        bookedE2.setPadding(0, 40, 30, 40);
-        //resourceE1.setMinimumWidth(550);
-        TextView tvResourse = new TextView(this);
-        TextView tvDate = new TextView(this);
-        Space space = new Space(this);
-        tvResourse.setText(r);
-        tvResourse.setTextColor(Color.WHITE);
-        tvResourse.setTextSize(18);
-        tvResourse.setTypeface(Typeface.SERIF);
-        tvDate.setText(c);
-        tvDate.setTextColor(Color.WHITE);
-        tvDate.setTextSize(12);
-        TextView returnbtn = new TextView(this);
-        returnbtn.setText("Book");
-        returnbtn.setPadding(40, 20, 40, 20);
-        returnbtn.setBackground(getResources().getDrawable(R.drawable.btn_bg));
-        //bookbtn.setBackgroundColor(Color.WHITE);
-        returnbtn.setTextColor(getResources().getColor(R.color.layoutbg));
-        bookedE1.addView(tvResourse);
-        bookedE1.addView(tvDate);
-        bookedE2.addView(returnbtn);
-        bookedset.addView(bookedE1);
-        bookedset.addView(bookedE2);
-        bookedhistorylist.addView(bookedset);
-        bookedhistorylist.addView(space, 0, 60);
-        bookedhistorylist.setPadding(50, 0, 50, 0);
+    private void add(LinearLayout bookedhistorylist, BookedResource[] bookedResources, int len) {
+        for (int i = 0; i < len; i++) {
+            String roll = bookedResources[i].getUserId();
+            TextView tv1 = new TextView(this);
+            tv1.setText(roll);
+            bookedhistorylist.addView(tv1);
+            if (roll =="160119733103") {
+                TextView tv = new TextView(this);
+                tv.setText(roll);
+                bookedhistorylist.addView(tv);
+            }
+        }
     }
-
+//        String r = "resource";
+//        String c = "date";
+//        LinearLayout bookedset = new LinearLayout(this);
+//        bookedset.setOrientation(LinearLayout.HORIZONTAL);
+//        bookedset.setBackground(getResources().getDrawable(R.drawable.lay_bg));
+//        bookedset.setPadding(18,32,18,32);
+//        LinearLayout bookedE1 = new LinearLayout(this);
+//        bookedE1.setOrientation(LinearLayout.VERTICAL);
+//        LinearLayout bookedE2 = new LinearLayout(this);
+//        //resourceE1.setBackgroundColor(Color.RED);
+//        //resourceE2.setBackgroundColor(Color.GREEN);
+//        bookedE1.setPadding(40, 30, 0, 20);
+//        bookedE2.setPadding(0, 40, 30, 40);
+//        //resourceE1.setMinimumWidth(550);
+//        TextView tvResourse = new TextView(this);
+//        TextView tvDate = new TextView(this);
+//        Space space = new Space(this);
+//        tvResourse.setText(r);
+//        tvResourse.setTextColor(Color.WHITE);
+//        tvResourse.setTextSize(18);
+//        tvResourse.setTypeface(Typeface.SERIF);
+//        tvDate.setText(c);
+//        tvDate.setTextColor(Color.WHITE);
+//        tvDate.setTextSize(12);
+//        TextView returnbtn = new TextView(this);
+//        returnbtn.setText("Book");
+//        returnbtn.setPadding(40, 20, 40, 20);
+//        returnbtn.setBackground(getResources().getDrawable(R.drawable.btn_bg));
+//        //bookbtn.setBackgroundColor(Color.WHITE);
+//        returnbtn.setTextColor(getResources().getColor(R.color.layoutbg));
+//        bookedE1.addView(tvResourse);
+//        bookedE1.addView(tvDate);
+//        bookedE2.addView(returnbtn);
+//        bookedset.addView(bookedE1);
+//        bookedset.addView(bookedE2);
+//        bookedhistorylist.addView(bookedset);
+//        bookedhistorylist.addView(space, 0, 60);
+//        bookedhistorylist.setPadding(50, 0, 50, 0);
 }
+
+
