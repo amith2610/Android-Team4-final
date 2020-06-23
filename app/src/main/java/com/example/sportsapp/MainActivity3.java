@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Space;
@@ -22,6 +23,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,18 +32,17 @@ public class MainActivity3 extends AppCompatActivity {
     JsonArrayRequest arrayRequestB;
     private RequestQueue queueB;
     LinearLayout bookedhistorylist;
-    
-
+    BookedResource[] currentUserBookedHistory, bookedResources;
+    TextView tv4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main3);
         bookedhistorylist = (LinearLayout) findViewById(R.id.bookedhistorylist);
-
-
+        tv4 = (TextView) findViewById(R.id.textView4);
         queueB = Volley.newRequestQueue(this);
-        String URLB =  "https://sport-resources-booking-api.herokuapp.com/allBookings";
+        String URLB = "https://sport-resources-booking-api.herokuapp.com/allBookings";
         arrayRequestB = new JsonArrayRequest(Request.Method.GET,
                 URLB,
                 null,
@@ -49,23 +50,34 @@ public class MainActivity3 extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONArray response) {
 
-                        String newResponse = response.toString();
-                        GsonBuilder gsonBuilder = new GsonBuilder();
-                        Gson gson = gsonBuilder.create();
-                        BookedResource[] bookedResources = gson.fromJson(newResponse,BookedResource[].class);
+//                        String newResponse = response.toString();
+//                        GsonBuilder gsonBuilder = new GsonBuilder();
+//                        Gson gson = gsonBuilder.create();
+//                        bookedResources = gson.fromJson(newResponse, BookedResource[].class);
                         int len = response.length();
-                        for(int i=0;i<len;i++) {
-
-                            add(bookedhistorylist,
-                                    bookedResources[i].getUserId(),
-                                    bookedResources[i].getResourceName(),
-                                    bookedResources[i].getDay(),
-                                    bookedResources[i].getStatus(),
-                                    bookedResources[i].getReturnDay());
-
+//                        int currLen = 0;
+//                        currentUserBookedHistory = new BookedResource[len];
+                        for (int i = 0; i < len; i++) {
+                            try {
+                                Log.d("History", response.getJSONObject(i).getString("user_id"));
+                                if (response.getJSONObject(i).getString("user_id").trim().equals(MainActivity.sroll)) {
+                                    //tv4.setText(tv4.getText().toString() + "\n" + response.getJSONObject(i).getString("resource_name") + " " + response.getJSONObject(i).getString("day"));
+                                    add(bookedhistorylist,response.getJSONObject(i).getString("resource_name"),response.getJSONObject(i).getString("day"));
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                         }
-
-
+//                        for(int i=0;i<len;i++) {
+////                            if(bookedResources[i].getUserId() == MainActivity.sroll){
+////                                currentUserBookedHistory[currLen] = bookedResources[i];
+////                                currLen+=1;
+////                            }
+////                        }
+//                        for (int k=0;k<currLen;k++){
+//                            add(bookedhistorylist);
+//                        }
+//                        add(bookedhistorylist, bookedResources, len);
 
                     }
                 },
@@ -74,29 +86,26 @@ public class MainActivity3 extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
 
 
-                        Toast toast = Toast.makeText(getApplicationContext(),error.toString(),Toast.LENGTH_LONG);
+                        Toast toast = Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_LONG);
                         toast.show();
                     }
-                }){
+                }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("Authorization", "Bearer "+MainActivity2.accessTkn);
+                params.put("Authorization", "Bearer " + MainActivity2.accessTkn);
                 return params;
             }
         };
         queueB.add(arrayRequestB);
 
 
-
     }
 
 
-
-
-    private void add(LinearLayout bookedhistorylist, String userId, String resourceName, String day, Integer status, Object returnDay) {
-        String r = "Resource";
-        String c = "Date";
+    private void add(LinearLayout bookedhistorylist,String resourcename,String date) {
+        String r = resourcename;
+        String c = date;
         LinearLayout bookedset = new LinearLayout(this);
         bookedset.setOrientation(LinearLayout.HORIZONTAL);
         bookedset.setBackground(getResources().getDrawable(R.drawable.lay_bg));
@@ -108,19 +117,19 @@ public class MainActivity3 extends AppCompatActivity {
         //resourceE2.setBackgroundColor(Color.GREEN);
         bookedE1.setPadding(40, 30, 0, 20);
         bookedE2.setPadding(0, 40, 30, 40);
-        bookedE1.setMinimumWidth(550);
+        //resourceE1.setMinimumWidth(550);
         TextView tvResourse = new TextView(this);
         TextView tvDate = new TextView(this);
         Space space = new Space(this);
         tvResourse.setText(r);
         tvResourse.setTextColor(Color.WHITE);
-        tvResourse.setTextSize(24);
+        tvResourse.setTextSize(18);
         tvResourse.setTypeface(Typeface.SERIF);
         tvDate.setText(c);
         tvDate.setTextColor(Color.WHITE);
         tvDate.setTextSize(12);
         TextView returnbtn = new TextView(this);
-        returnbtn.setText("Status");
+        returnbtn.setText("Book");
         returnbtn.setPadding(40, 20, 40, 20);
         returnbtn.setBackground(getResources().getDrawable(R.drawable.btn_bg));
         //bookbtn.setBackgroundColor(Color.WHITE);
@@ -133,6 +142,11 @@ public class MainActivity3 extends AppCompatActivity {
         bookedhistorylist.addView(bookedset);
         bookedhistorylist.addView(space, 0, 60);
         bookedhistorylist.setPadding(50, 0, 50, 0);
-    }
+
+        }
 
 }
+
+
+
+

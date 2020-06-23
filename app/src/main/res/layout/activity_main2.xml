@@ -94,14 +94,12 @@
             android:paddingLeft="55dp">
 
 
-
-            <Button
-                android:id="@+id/cancelButton"
-                android:layout_width="240dp"
-                android:layout_height="60dp"
-                android:layout_gravity="center_vertical|center_horizontal"
-
-                android:text="Cancel" />
+            <TextView
+                android:id="@+id/textE2"
+                android:layout_width="123dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginHorizontal="55dp" />
         </LinearLayout>
     </LinearLayout>
 
