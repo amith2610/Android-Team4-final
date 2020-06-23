@@ -95,8 +95,8 @@ public class MainActivity3 extends AppCompatActivity {
 
 
     private void add(LinearLayout bookedhistorylist, String userId, String resourceName, String day, Integer status, Object returnDay) {
-        String r = "resource";
-        String c = "date";
+        String r = "Resource";
+        String c = "Date";
         LinearLayout bookedset = new LinearLayout(this);
         bookedset.setOrientation(LinearLayout.HORIZONTAL);
         bookedset.setBackground(getResources().getDrawable(R.drawable.lay_bg));
@@ -108,19 +108,19 @@ public class MainActivity3 extends AppCompatActivity {
         //resourceE2.setBackgroundColor(Color.GREEN);
         bookedE1.setPadding(40, 30, 0, 20);
         bookedE2.setPadding(0, 40, 30, 40);
-        //resourceE1.setMinimumWidth(550);
+        bookedE1.setMinimumWidth(550);
         TextView tvResourse = new TextView(this);
         TextView tvDate = new TextView(this);
         Space space = new Space(this);
         tvResourse.setText(r);
         tvResourse.setTextColor(Color.WHITE);
-        tvResourse.setTextSize(18);
+        tvResourse.setTextSize(24);
         tvResourse.setTypeface(Typeface.SERIF);
         tvDate.setText(c);
         tvDate.setTextColor(Color.WHITE);
         tvDate.setTextSize(12);
         TextView returnbtn = new TextView(this);
-        returnbtn.setText("Book");
+        returnbtn.setText("Status");
         returnbtn.setPadding(40, 20, 40, 20);
         returnbtn.setBackground(getResources().getDrawable(R.drawable.btn_bg));
         //bookbtn.setBackgroundColor(Color.WHITE);

@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Space;
 import android.widget.TextView;
@@ -55,6 +56,8 @@ public class MainActivity2 extends AppCompatActivity {
     Boolean value;
     int bookPress;
     BookedResource userBookedData;
+    Button cancelButton;
+    LinearLayout bookedE2;
 
 
     @Override
@@ -114,6 +117,8 @@ public class MainActivity2 extends AppCompatActivity {
 
         queue.add(arrayRequest);
         Booked();
+        cancelButton=(Button) findViewById(R.id.cancelButton);
+        bookedE2=(LinearLayout) findViewById(R.id.bookedE2);
 
 
     }
@@ -166,6 +171,7 @@ public class MainActivity2 extends AppCompatActivity {
                         text.setText(userBookedData.getResourceName());
                         text.setTypeface(Typeface.SERIF);
                         text.setTextSize(19);
+                        bookedE2.setVisibility(View.VISIBLE);
 
                     }
 
@@ -175,6 +181,9 @@ public class MainActivity2 extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
 
                         value = false;
+                        bookedE2.setVisibility(View.INVISIBLE);
+                        text.setTextSize(25);
+
 
                     }
                 }) {

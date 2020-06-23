@@ -39,21 +39,21 @@
             android:orientation="vertical" />
     </ScrollView>
 
+
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="401dp"
-        android:layout_height="39dp"
+        android:layout_width="212dp"
+        android:layout_height="40dp"
         android:text="Available"
         android:textColor="#686666"
-        android:textSize="22sp"
+        android:textSize="30sp"
         android:typeface="serif"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.229"
+        app:layout_constraintHorizontal_bias="0.195"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.349" />
-
+        app:layout_constraintVertical_bias="0.335" />
 
     <LinearLayout
         android:id="@+id/bookedlist"
@@ -87,25 +87,20 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/bookedE2"
             android:layout_width="340dp"
             android:layout_height="60dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingLeft="55dp">
 
-            <TextView
-                android:layout_width="170dp"
-                android:layout_height="60dp"
-                android:paddingTop="30sp"
-                android:text="No bookings"
-                android:textAlignment="center"
-                android:textColor="#fff"
-                android:textStyle="bold">
 
-            </TextView>
 
             <Button
                 android:id="@+id/cancelButton"
-                android:layout_width="170dp"
+                android:layout_width="240dp"
                 android:layout_height="60dp"
+                android:layout_gravity="center_vertical|center_horizontal"
+
                 android:text="Cancel" />
         </LinearLayout>
     </LinearLayout>
