@@ -114,7 +114,7 @@ public class MainActivity3 extends AppCompatActivity {
             }
         }
     }
-//        String r = "resource";
+/*       String r = "resource";
 //        String c = "date";
 //        LinearLayout bookedset = new LinearLayout(this);
 //        bookedset.setOrientation(LinearLayout.HORIZONTAL);
@@ -151,7 +151,7 @@ public class MainActivity3 extends AppCompatActivity {
 //        bookedset.addView(bookedE2);
 //        bookedhistorylist.addView(bookedset);
 //        bookedhistorylist.addView(space, 0, 60);
-//        bookedhistorylist.setPadding(50, 0, 50, 0);
-}
+//       bookedhistorylist.setPadding(50, 0, 50, 0);
+}*/
 
 
