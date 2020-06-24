@@ -243,7 +243,9 @@ public class MainActivity2 extends AppCompatActivity {
                             textE2.setTextSize(20);
                             textE2.setPadding(20,12,4,5);
                             textE2.setBackgroundColor(Color.WHITE);
-                            
+                            textE2.setWidth(1000);
+                            textE2.setTextSize(18);
+
 //                            RelativeLayout.LayoutParams layoutParams=(RelativeLayout.LayoutParams) textE2.getLayoutParams();
 //                            layoutParams.width=30;
 //                            textE2.setLayoutParams(layoutParams);
