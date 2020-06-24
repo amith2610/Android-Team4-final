@@ -34,6 +34,7 @@ public class MainActivity3 extends AppCompatActivity {
     LinearLayout bookedhistorylist;
     BookedResource[] currentUserBookedHistory, bookedResources;
     TextView tv4;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,11 +57,12 @@ public class MainActivity3 extends AppCompatActivity {
                         int len = response.length();
 //                        int currLen = 0;
 //                        currentUserBookedHistory = new BookedResource[len];
-                        for(int i=0;i<len;i++) {
+                        for (int i = 0; i < len; i++) {
                             try {
-                                Log.d("PkThop",response.getJSONObject(i).getString("user_id"));
-                                if(response.getJSONObject(i).getString("user_id").trim().equals("160118733012")){
-                                    tv4.setText(tv4.getText().toString()+"\n"+response.getJSONObject(i).getString("resource_name")+" "+response.getJSONObject(i).getString("day"));
+                                Log.d("History", response.getJSONObject(i).getString("user_id"));
+                                if (response.getJSONObject(i).getString("user_id").trim().equals(MainActivity.sroll)) {
+                                    //tv4.setText(tv4.getText().toString() + "\n" + response.getJSONObject(i).getString("resource_name") + " " + response.getJSONObject(i).getString("day"));
+                                    add(bookedhistorylist,response.getJSONObject(i).getString("resource_name"),response.getJSONObject(i).getString("day"));
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -101,57 +103,50 @@ public class MainActivity3 extends AppCompatActivity {
     }
 
 
-    private void add(LinearLayout bookedhistorylist, BookedResource[] bookedResources, int len) {
-        for (int i = 0; i < len; i++) {
-            String roll = bookedResources[i].getUserId();
-            TextView tv1 = new TextView(this);
-            tv1.setText(roll);
-            bookedhistorylist.addView(tv1);
-            if (roll.equals("160119733103")) {
-                TextView tv = new TextView(this);
-                tv.setText(roll);
-                bookedhistorylist.addView(tv);
-            }
+    private void add(LinearLayout bookedhistorylist,String resourcename,String date) {
+        String r = resourcename;
+        String c = date;
+        LinearLayout bookedset = new LinearLayout(this);
+        bookedset.setOrientation(LinearLayout.HORIZONTAL);
+        bookedset.setBackground(getResources().getDrawable(R.drawable.lay_bg));
+        bookedset.setPadding(18,32,18,32);
+        LinearLayout bookedE1 = new LinearLayout(this);
+        bookedE1.setOrientation(LinearLayout.VERTICAL);
+        LinearLayout bookedE2 = new LinearLayout(this);
+        //resourceE1.setBackgroundColor(Color.RED);
+        //resourceE2.setBackgroundColor(Color.GREEN);
+        bookedE1.setPadding(40, 30, 0, 20);
+        bookedE2.setPadding(0, 40, 30, 40);
+        //resourceE1.setMinimumWidth(550);
+        TextView tvResourse = new TextView(this);
+        TextView tvDate = new TextView(this);
+        Space space = new Space(this);
+        tvResourse.setText(r);
+        tvResourse.setTextColor(Color.WHITE);
+        tvResourse.setTextSize(18);
+        tvResourse.setTypeface(Typeface.SERIF);
+        tvDate.setText(c);
+        tvDate.setTextColor(Color.WHITE);
+        tvDate.setTextSize(12);
+        TextView returnbtn = new TextView(this);
+        returnbtn.setText("Book");
+        returnbtn.setPadding(40, 20, 40, 20);
+        returnbtn.setBackground(getResources().getDrawable(R.drawable.btn_bg));
+        //bookbtn.setBackgroundColor(Color.WHITE);
+        returnbtn.setTextColor(getResources().getColor(R.color.layoutbg));
+        bookedE1.addView(tvResourse);
+        bookedE1.addView(tvDate);
+        bookedE2.addView(returnbtn);
+        bookedset.addView(bookedE1);
+        bookedset.addView(bookedE2);
+        bookedhistorylist.addView(bookedset);
+        bookedhistorylist.addView(space, 0, 60);
+        bookedhistorylist.setPadding(50, 0, 50, 0);
+
         }
-    }
-/*       String r = "resource";
-//        String c = "date";
-//        LinearLayout bookedset = new LinearLayout(this);
-//        bookedset.setOrientation(LinearLayout.HORIZONTAL);
-//        bookedset.setBackground(getResources().getDrawable(R.drawable.lay_bg));
-//        bookedset.setPadding(18,32,18,32);
-//        LinearLayout bookedE1 = new LinearLayout(this);
-//        bookedE1.setOrientation(LinearLayout.VERTICAL);
-//        LinearLayout bookedE2 = new LinearLayout(this);
-//        //resourceE1.setBackgroundColor(Color.RED);
-//        //resourceE2.setBackgroundColor(Color.GREEN);
-//        bookedE1.setPadding(40, 30, 0, 20);
-//        bookedE2.setPadding(0, 40, 30, 40);
-//        //resourceE1.setMinimumWidth(550);
-//        TextView tvResourse = new TextView(this);
-//        TextView tvDate = new TextView(this);
-//        Space space = new Space(this);
-//        tvResourse.setText(r);
-//        tvResourse.setTextColor(Color.WHITE);
-//        tvResourse.setTextSize(18);
-//        tvResourse.setTypeface(Typeface.SERIF);
-//        tvDate.setText(c);
-//        tvDate.setTextColor(Color.WHITE);
-//        tvDate.setTextSize(12);
-//        TextView returnbtn = new TextView(this);
-//        returnbtn.setText("Book");
-//        returnbtn.setPadding(40, 20, 40, 20);
-//        returnbtn.setBackground(getResources().getDrawable(R.drawable.btn_bg));
-//        //bookbtn.setBackgroundColor(Color.WHITE);
-//        returnbtn.setTextColor(getResources().getColor(R.color.layoutbg));
-//        bookedE1.addView(tvResourse);
-//        bookedE1.addView(tvDate);
-//        bookedE2.addView(returnbtn);
-//        bookedset.addView(bookedE1);
-//        bookedset.addView(bookedE2);
-//        bookedhistorylist.addView(bookedset);
-//        bookedhistorylist.addView(space, 0, 60);
-//       bookedhistorylist.setPadding(50, 0, 50, 0);
-}*/
+
+}
+
+
 
 
