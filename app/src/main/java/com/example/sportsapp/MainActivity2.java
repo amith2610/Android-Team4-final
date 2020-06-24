@@ -39,6 +39,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import  com.example.sportsapp.BookedResource;
 
 public class MainActivity2 extends AppCompatActivity {
     static String accessTkn;
@@ -57,8 +58,9 @@ public class MainActivity2 extends AppCompatActivity {
     Boolean value;
     int bookPress;
     BookedResource userBookedData;
-    TextView textE2;
+    //TextView textE2;
     LinearLayout bookedE2;
+    Button optionE2;
 
 
     @Override
@@ -77,7 +79,41 @@ public class MainActivity2 extends AppCompatActivity {
         text3 = (TextView) findViewById(R.id.textView3);
         text5 = (TextView) findViewById(R.id.textView5);
 
+        optionE2 = (Button) findViewById(R.id.optionE2);
+        bookedE2=(LinearLayout) findViewById(R.id.bookedE2);
+        bookedE2.setVisibility(View.INVISIBLE);
 
+        Booked();
+
+
+
+
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater=getMenuInflater();
+        inflater.inflate(R.menu.menu,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.history:
+                openActivity3();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+    public void openActivity3() {
+        Intent intent = new Intent(this,MainActivity3.class);
+        startActivity(intent);
+    }
+
+
+    public void DisplayResources(){
 
 
         String URL = "https://sport-resources-booking-api.herokuapp.com/ResourcesPresent";
@@ -117,32 +153,7 @@ public class MainActivity2 extends AppCompatActivity {
         };
 
         queue.add(arrayRequest);
-        Booked();
-        textE2=(TextView) findViewById(R.id.textE2);
-        bookedE2=(LinearLayout) findViewById(R.id.bookedE2);
 
-
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater=getMenuInflater();
-        inflater.inflate(R.menu.menu,menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.history:
-                openActivity3();
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-    public void openActivity3() {
-        Intent intent = new Intent(this,MainActivity3.class);
-        startActivity(intent);
     }
 
     private void cancel() {
@@ -165,14 +176,16 @@ public class MainActivity2 extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        text3.setText("Success");
+                        Toast.makeText(MainActivity2.this, "Cancel Successful!", Toast.LENGTH_SHORT).show();
+                        Booked();
 
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getApplicationContext(),error.toString(),Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(),"Cancel Failed! Check terms and conditions",Toast.LENGTH_LONG).show();
+                        Booked();
 
                     }
                 }){
@@ -193,7 +206,9 @@ public class MainActivity2 extends AppCompatActivity {
 
     }
 
-    private void Booked() {
+    public void Booked() {
+        RequestQueue queueB;
+        queueB = Volley.newRequestQueue(this);
         idBookingLog = new JSONObject();
 
         try {
@@ -215,36 +230,35 @@ public class MainActivity2 extends AppCompatActivity {
                         value = true;
                         GsonBuilder gsonBuilder = new GsonBuilder();
                         Gson gson = gsonBuilder.create();
-                        BookedResource userBookedData = gson.fromJson(String.valueOf(response),
-                                BookedResource.class);
+                        userBookedData = gson.fromJson(String.valueOf(response),BookedResource.class);
+
                         if (userBookedData.getStatus()==0){
+                            bookedE2.setVisibility(View.VISIBLE);
                             text.setText(userBookedData.getResourceName());
-                            text.setTypeface(Typeface.SERIF);
-                            text.setTextSize(19);
-                            textE2.setText("Cancel");
-                            textE2.setTextSize(20);
-                            textE2.setTextColor(Color.BLACK);
-                            textE2.setBackground(getResources().getDrawable(R.drawable.btn_bg));
-                            textE2.setPadding(80,27,4,5);
-                            textE2.setOnClickListener(new View.OnClickListener() {
+                            text.setTextSize(20);
+                            optionE2.setEnabled(true);
+                            optionE2.setText("Cancel");
+                            optionE2.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     cancel();
                                 }
                             });
-
                         }
+
                         else if (userBookedData.getStatus()==1){
-                            text.setText(userBookedData.getResourceName());
-                            text.setTypeface(Typeface.SERIF);
+                            bookedE2.setVisibility(View.INVISIBLE);
+                            text.setText("You have already booked a resource !");
                             text.setTextSize(19);
-                            textE2.setText("Return Resource");
-                            textE2.setTextColor(Color.BLACK);
-                            textE2.setTextSize(20);
-                            textE2.setPadding(20,12,4,5);
-                            textE2.setBackgroundColor(Color.WHITE);
-                            textE2.setWidth(1000);
-                            textE2.setTextSize(18);
+//                            if (rtime.equals("null")) {
+//                                optionE2.setText("Not Returned");
+//                                optionE2.setEnabled(false);
+//                            }
+//                            else {
+//                                text.setText("No Bookings");
+//                                bookedE2.setVisibility(View.INVISIBLE);
+//                                text.setTextSize(25);
+//                            }
 
 //                            RelativeLayout.LayoutParams layoutParams=(RelativeLayout.LayoutParams) textE2.getLayoutParams();
 //                            layoutParams.width=30;
@@ -254,6 +268,8 @@ public class MainActivity2 extends AppCompatActivity {
 
 
                         }
+                        DisplayResources();
+
 
 
                     }
@@ -263,9 +279,12 @@ public class MainActivity2 extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
 
+
                         value = false;
+                        text.setText("No Bookings");
                         bookedE2.setVisibility(View.INVISIBLE);
                         text.setTextSize(25);
+                        DisplayResources();
 
 
                     }
@@ -283,12 +302,13 @@ public class MainActivity2 extends AppCompatActivity {
                 return params;
             }
         };
-        queue.add(objectRequest_bookingLog);
+        queueB.add(objectRequest_bookingLog);
+
 
 
     }
 
-    private void add(LinearLayout list, final Resource unit) {
+    public void add(LinearLayout list, final Resource unit) {
         String r = unit.getResourceName();
         String c = "Count: " + unit.getResourcesAvailable().toString() + "/" + unit.getCount().toString();
         LinearLayout resourceset = new LinearLayout(this);
@@ -302,7 +322,7 @@ public class MainActivity2 extends AppCompatActivity {
         //resourceE2.setBackgroundColor(Color.GREEN);
         resourceE1.setPadding(40, 30, 0, 20);
         resourceE2.setPadding(0, 40, 30, 40);
-        resourceE1.setMinimumWidth(550);
+        //resourceE1.setMinimumWidth(550);
         TextView tvResourse = new TextView(this);
         TextView tvCount = new TextView(this);
         Space space = new Space(this);
@@ -313,32 +333,44 @@ public class MainActivity2 extends AppCompatActivity {
         tvCount.setText(c);
         tvCount.setTextColor(Color.WHITE);
         tvCount.setTextSize(12);
-        TextView bookbtn = new TextView(this);
+//        TextView bookbtn = new TextView(this);
+        Button bookbtn = new Button(this);
         bookbtn.setText("Book");
-        bookbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (value){
-                    Toast.makeText(getApplicationContext(),"BOOKING UNSUCCESSFUL",Toast.LENGTH_LONG).show();
-
+        if (value){
+            bookbtn.setEnabled(false);
+        }
+        else{
+            bookbtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    book(MainActivity.sroll, unit.getResourceName());
                 }
-                else {
-
-
-                        book(MainActivity.sroll,unit.getResourceName());
-
-                    }
-
-                   book(MainActivity.sroll,unit.getResourceName());
-
-                }
-
-
-
-
-
-        });
+            });
+        }
+//        bookbtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                if (value){
+//                    Toast.makeText(getApplicationContext(),"BOOKING UNSUCCESSFUL",Toast.LENGTH_LONG).show();
+//
+//                }
+//                else {
+//
+//
+//                    book(MainActivity.sroll,unit.getResourceName());
+//
+//                }
+//
+//                book(MainActivity.sroll,unit.getResourceName());
+//
+//            }
+//
+//
+//
+//
+//
+//        });
         bookbtn.setPadding(40, 20, 40, 20);
         bookbtn.setBackground(getResources().getDrawable(R.drawable.btn_bg));
         //bookbtn.setBackgroundColor(Color.WHITE);
@@ -374,7 +406,7 @@ public class MainActivity2 extends AppCompatActivity {
             bookingDetails.put("id",sroll);
             bookingDetails.put("name",resourceName);
             bookingDetails.put("day",date);
-            bookingDetails.put("reservation_time", "12:10:00");
+            bookingDetails.put("reservation_time", "12:15:00");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -392,8 +424,8 @@ public class MainActivity2 extends AppCompatActivity {
 
 
 
-            @Override
-            public void onResponse(JSONObject response) {
+                    @Override
+                    public void onResponse(JSONObject response) {
 
 
                         text.setText("Booking Successful1");

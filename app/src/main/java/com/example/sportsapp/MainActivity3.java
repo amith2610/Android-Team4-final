@@ -62,7 +62,11 @@ public class MainActivity3 extends AppCompatActivity {
                                 Log.d("History", response.getJSONObject(i).getString("user_id"));
                                 if (response.getJSONObject(i).getString("user_id").trim().equals(MainActivity.sroll)) {
                                     //tv4.setText(tv4.getText().toString() + "\n" + response.getJSONObject(i).getString("resource_name") + " " + response.getJSONObject(i).getString("day"));
-                                    add(bookedhistorylist,response.getJSONObject(i).getString("resource_name"),response.getJSONObject(i).getString("day"));
+                                    add(bookedhistorylist,
+                                            response.getJSONObject(i).getString("resource_name"),
+                                            response.getJSONObject(i).getString("day"),
+                                            response.getJSONObject(i).getString("status"),
+                                            response.getJSONObject(i).getString("return_time").toString());
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -103,7 +107,7 @@ public class MainActivity3 extends AppCompatActivity {
     }
 
 
-    private void add(LinearLayout bookedhistorylist,String resourcename,String date) {
+    private void add(LinearLayout bookedhistorylist,String resourcename,String date,String status,String rtime) {
         String r = resourcename;
         String c = date;
         LinearLayout bookedset = new LinearLayout(this);
@@ -117,7 +121,7 @@ public class MainActivity3 extends AppCompatActivity {
         //resourceE2.setBackgroundColor(Color.GREEN);
         bookedE1.setPadding(40, 30, 0, 20);
         bookedE2.setPadding(0, 40, 30, 40);
-        //resourceE1.setMinimumWidth(550);
+        bookedE1.setMinimumWidth(600);
         TextView tvResourse = new TextView(this);
         TextView tvDate = new TextView(this);
         Space space = new Space(this);
@@ -129,11 +133,32 @@ public class MainActivity3 extends AppCompatActivity {
         tvDate.setTextColor(Color.WHITE);
         tvDate.setTextSize(12);
         TextView returnbtn = new TextView(this);
-        returnbtn.setText("Book");
+        //returnbtn.setText("Book");
         returnbtn.setPadding(40, 20, 40, 20);
-        returnbtn.setBackground(getResources().getDrawable(R.drawable.btn_bg));
+        if (status.equals("0")) {
+            returnbtn.setText("Not collected");
+            returnbtn.setBackground(getResources().getDrawable(R.drawable.btn_bg));
+            returnbtn.setTextColor(getResources().getColor(R.color.layoutbg));
+        }
+        else if(status.equals("1")) {
+            if (rtime.equals("null")) {
+                returnbtn.setText("Not Returned");
+                returnbtn.setBackground(getResources().getDrawable(R.drawable.status_bg));
+                returnbtn.setTextColor(getResources().getColor(R.color.black));
+                returnbtn.setTextSize(14);
+
+            }
+            else {
+                returnbtn.setText("Returned");
+                //tv4.setText(rtime);
+                returnbtn.setBackground(getResources().getDrawable(R.drawable.status_bg_1));
+                returnbtn.setTextColor(getResources().getColor(R.color.white));
+                returnbtn.setTextSize(18);
+            }
+        }
+        //returnbtn.setBackground(getResources().getDrawable(R.drawable.btn_bg));
         //bookbtn.setBackgroundColor(Color.WHITE);
-        returnbtn.setTextColor(getResources().getColor(R.color.layoutbg));
+        //returnbtn.setTextColor(getResources().getColor(R.color.layoutbg));
         bookedE1.addView(tvResourse);
         bookedE1.addView(tvDate);
         bookedE2.addView(returnbtn);
@@ -143,7 +168,7 @@ public class MainActivity3 extends AppCompatActivity {
         bookedhistorylist.addView(space, 0, 60);
         bookedhistorylist.setPadding(50, 0, 50, 0);
 
-        }
+    }
 
 }
 

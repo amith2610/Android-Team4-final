@@ -76,8 +76,10 @@
                 android:id="@+id/bookedmsg"
                 android:layout_width="340dp"
                 android:layout_height="60dp"
-                android:paddingTop="30sp"
-                android:text="No bookings"
+                android:paddingTop="10sp"
+                android:text=""
+                android:textSize="25dp"
+                android:typeface="serif"
                 android:textAlignment="center"
                 android:textColor="#fff"
                 android:textStyle="bold">
@@ -91,15 +93,18 @@
             android:layout_width="340dp"
             android:layout_height="60dp"
             android:orientation="horizontal"
-            android:paddingLeft="55dp">
+            android:paddingLeft="95dp">
 
 
-            <TextView
-                android:id="@+id/textE2"
-                android:layout_width="123dp"
-                android:layout_height="48dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginHorizontal="55dp" />
+            <Button
+                android:id="@+id/optionE2"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:textSize="18dp"
+                android:textColor="@android:color/white"
+                android:background="@drawable/lay_bg"
+                android:text="Not Returned">
+            </Button>
         </LinearLayout>
     </LinearLayout>
 
