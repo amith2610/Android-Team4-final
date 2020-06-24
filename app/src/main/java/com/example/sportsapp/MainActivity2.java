@@ -13,7 +13,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Space;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,6 +57,8 @@ public class MainActivity2 extends AppCompatActivity {
     Boolean value;
     int bookPress;
     BookedResource userBookedData;
+    TextView textE2;
+    LinearLayout bookedE2;
 
 
     @Override
@@ -114,6 +118,8 @@ public class MainActivity2 extends AppCompatActivity {
 
         queue.add(arrayRequest);
         Booked();
+        textE2=(TextView) findViewById(R.id.textE2);
+        bookedE2=(LinearLayout) findViewById(R.id.bookedE2);
 
 
     }
@@ -137,6 +143,54 @@ public class MainActivity2 extends AppCompatActivity {
     public void openActivity3() {
         Intent intent = new Intent(this,MainActivity3.class);
         startActivity(intent);
+    }
+
+    private void cancel() {
+
+        RequestQueue Cqueue;
+        Cqueue = Volley.newRequestQueue(this);
+
+        JSONObject cid=new JSONObject();
+        try {
+            cid.put("id",MainActivity.sroll);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        String CURL = "https://sport-resources-booking-api.herokuapp.com/cancelBooking";
+
+        JsonObjectRequest CobjectRequest = new JsonObjectRequest(Request.Method.POST,
+                CURL,
+                cid,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        text3.setText("Success");
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getApplicationContext(),error.toString(),Toast.LENGTH_LONG).show();
+
+                    }
+                }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Authorization", "Bearer " + accessTkn);
+                return params;
+            }
+            @Override
+            public Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("id", MainActivity.sroll);
+                return params;
+            }
+        };
+        Cqueue.add(CobjectRequest);
+
     }
 
     private void Booked() {
@@ -163,9 +217,44 @@ public class MainActivity2 extends AppCompatActivity {
                         Gson gson = gsonBuilder.create();
                         BookedResource userBookedData = gson.fromJson(String.valueOf(response),
                                 BookedResource.class);
-                        text.setText(userBookedData.getResourceName());
-                        text.setTypeface(Typeface.SERIF);
-                        text.setTextSize(19);
+                        if (userBookedData.getStatus()==0){
+                            text.setText(userBookedData.getResourceName());
+                            text.setTypeface(Typeface.SERIF);
+                            text.setTextSize(19);
+                            textE2.setText("Cancel");
+                            textE2.setTextSize(20);
+                            textE2.setTextColor(Color.BLACK);
+                            textE2.setBackground(getResources().getDrawable(R.drawable.btn_bg));
+                            textE2.setPadding(80,27,4,5);
+                            textE2.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    cancel();
+                                }
+                            });
+
+                        }
+                        else if (userBookedData.getStatus()==1){
+                            text.setText(userBookedData.getResourceName());
+                            text.setTypeface(Typeface.SERIF);
+                            text.setTextSize(19);
+                            textE2.setText("Return Resource");
+                            textE2.setTextColor(Color.BLACK);
+                            textE2.setTextSize(20);
+                            textE2.setPadding(20,12,4,5);
+                            textE2.setBackgroundColor(Color.WHITE);
+                            textE2.setWidth(1000);
+                            textE2.setTextSize(18);
+
+//                            RelativeLayout.LayoutParams layoutParams=(RelativeLayout.LayoutParams) textE2.getLayoutParams();
+//                            layoutParams.width=30;
+//                            textE2.setLayoutParams(layoutParams);
+
+
+
+
+                        }
+
 
                     }
 
@@ -175,6 +264,9 @@ public class MainActivity2 extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
 
                         value = false;
+                        bookedE2.setVisibility(View.INVISIBLE);
+                        text.setTextSize(25);
+
 
                     }
                 }) {
@@ -304,7 +396,7 @@ public class MainActivity2 extends AppCompatActivity {
             public void onResponse(JSONObject response) {
 
 
-                        text.setText("Booking Successful");
+                        text.setText("Booking Successful1");
 
 
                     }
@@ -322,8 +414,9 @@ public class MainActivity2 extends AppCompatActivity {
 //                    Toast.makeText(getApplicationContext(),"BOOKING SUCCESSFUL",Toast.LENGTH_LONG).show();
 //                }
 
-                Toast.makeText(getApplicationContext(),"BOOKING SUCCESSFUL",Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(),"BOOKING SUCCESSFUL",Toast.LENGTH_LONG).show();
                 Booked();
+                Toast.makeText(getApplicationContext(),"BOOKING SUCCESSFUL",Toast.LENGTH_LONG).show();
 
 
 
