@@ -38,6 +38,7 @@ public class MainActivity extends Activity {
     EditText pwd;
     static String sroll;
     String spwd;
+    TextView forgot_pwd;
     String URL = "https://sport-resources-booking-api.herokuapp.com/login";
 
     @Override
@@ -45,6 +46,8 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+        forgot_pwd = findViewById(R.id.forgot_pwd);
         Button logbtn = (Button) findViewById(R.id.logbtn);
          roll=(EditText) findViewById(R.id.roll);
          pwd=(EditText) findViewById(R.id.pwd);
@@ -133,11 +136,21 @@ public class MainActivity extends Activity {
                 queue.add(objectRequest);
             }
         });
+        forgot_pwd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openActivity6();
+            }
+        });
     }
 
     private void openActivity2() {
 
         Intent intent = new Intent(this,MainActivity2.class);
+        startActivity(intent);
+    }
+    private  void openActivity6() {
+        Intent intent = new Intent(this,MainActivity6.class);
         startActivity(intent);
     }
 

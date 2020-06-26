@@ -34,6 +34,11 @@ public class MainActivity4 extends AppCompatActivity {
     JsonArrayRequest arrayRequestC;
     private JSONObject userid;
     TextView cpwd;
+    TextView name;
+    TextView iD;
+    TextView password;
+    TextView branch;
+    TextView fine;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +46,11 @@ public class MainActivity4 extends AppCompatActivity {
         setContentView(R.layout.activity_main4);
         user_id = (TextView) findViewById(R.id.textView);
         user_pwd = (TextView) findViewById(R.id.textView6);
+        name = findViewById(R.id.name);
+        iD = findViewById(R.id.iD);
+        password = findViewById(R.id.password);
+        branch = findViewById(R.id.branch);
+        fine = findViewById(R.id.fine);
         queueC = Volley.newRequestQueue(this);
         cpwd = (TextView) findViewById(R.id.cpwd);
         userid = new JSONObject();
@@ -50,17 +60,18 @@ public class MainActivity4 extends AppCompatActivity {
             e.printStackTrace();
         }
         String URLC = "https://sport-resources-booking-api.herokuapp.com/users";
-        JsonObjectRequest users = new JsonObjectRequest(Request.Method.GET,
+        JsonObjectRequest users = new JsonObjectRequest(Request.Method.POST,
                 URLC,
                 userid,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            //Log.d("History", response.getJSONObject(i).getString("id"));
-                           // if (response.getJSONObject("id").toString().trim().equals(MainActivity.sroll)) {
-                                //tv4.setText(tv4.getText().toString() + "\n" + response.getJSONObject(i).getString("resource_name") + " " + response.getJSONObject(i).getString("day"));
-                                user_pwd.setText(response.getString("id"));
+                                name.setText(response.getString("name"));
+                                iD.setText(response.getString("id"));
+                                password.setText(response.getString("password"));
+                                branch.setText(response.getString("branch"));
+                                fine.setText(response.getString("fine"));
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

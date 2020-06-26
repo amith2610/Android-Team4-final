@@ -53,8 +53,8 @@ public class MainActivity5 extends AppCompatActivity {
             public void onClick(View v) {
                 try {
                     change_pwd.put("id", "160119733082");
-                    change_pwd.put("password", "abc123");
-                    change_pwd.put("new_password","abc321");
+                    change_pwd.put("password", "abc321");
+                    change_pwd.put("new_password","abc123");
 
                 } catch (JSONException e) {
                     e.printStackTrace();

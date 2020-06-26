@@ -122,6 +122,8 @@ public class MainActivity2 extends AppCompatActivity {
         Intent intent2 = new Intent(this,MainActivity4.class);
         startActivity(intent2);
     }
+    int c=1;
+
 
 
     public void DisplayResources(){
@@ -140,11 +142,12 @@ public class MainActivity2 extends AppCompatActivity {
                         Gson gson = gsonBuilder.create();
                         Resource[] resources = gson.fromJson(newResponse,Resource[].class);
                         int len = resources.length;
+                        if (c==1){
                         for(int i=0;i<len;i++){
                             Resource unit = resources[i];
                             add(availablelist,unit);
 
-                        }
+                        } }
                     }
                 },
                 new Response.ErrorListener() {
@@ -168,6 +171,9 @@ public class MainActivity2 extends AppCompatActivity {
     }
 
     private void cancel() {
+
+        //c=1;
+        //DisplayResources();
 
         RequestQueue Cqueue;
         Cqueue = Volley.newRequestQueue(this);
@@ -261,24 +267,9 @@ public class MainActivity2 extends AppCompatActivity {
                             bookedE2.setVisibility(View.INVISIBLE);
                             text.setText("You have already booked a resource !");
                             text.setTextSize(19);
-//                            if (rtime.equals("null")) {
-//                                optionE2.setText("Not Returned");
-//                                optionE2.setEnabled(false);
-//                            }
-//                            else {
-//                                text.setText("No Bookings");
-//                                bookedE2.setVisibility(View.INVISIBLE);
-//                                text.setTextSize(25);
-//                            }
-
-//                            RelativeLayout.LayoutParams layoutParams=(RelativeLayout.LayoutParams) textE2.getLayoutParams();
-//                            layoutParams.width=30;
-//                            textE2.setLayoutParams(layoutParams);
-
-
-
 
                         }
+                        c=2;
                         DisplayResources();
 
 
@@ -320,37 +311,78 @@ public class MainActivity2 extends AppCompatActivity {
     }
 
     public void add(LinearLayout list, final Resource unit) {
-        String r = unit.getResourceName();
-        String c = "Count: " + unit.getResourcesAvailable().toString() + "/" + unit.getCount().toString();
-        LinearLayout resourceset = new LinearLayout(this);
-        resourceset.setOrientation(LinearLayout.HORIZONTAL);
-        resourceset.setBackground(getResources().getDrawable(R.drawable.lay_bg));
-        resourceset.setPadding(18,32,18,32);
-        LinearLayout resourceE1 = new LinearLayout(this);
-        resourceE1.setOrientation(LinearLayout.VERTICAL);
-        LinearLayout resourceE2 = new LinearLayout(this);
-        //resourceE1.setBackgroundColor(Color.RED);
-        //resourceE2.setBackgroundColor(Color.GREEN);
-        resourceE1.setPadding(40, 30, 0, 20);
-        resourceE2.setPadding(0, 40, 30, 40);
-        //resourceE1.setMinimumWidth(550);
-        TextView tvResourse = new TextView(this);
-        TextView tvCount = new TextView(this);
-        Space space = new Space(this);
-        tvResourse.setText(r);
-        tvResourse.setTextColor(Color.WHITE);
-        tvResourse.setTextSize(18);
-        tvResourse.setTypeface(Typeface.SERIF);
-        tvCount.setText(c);
-        tvCount.setTextColor(Color.WHITE);
-        tvCount.setTextSize(12);
-//        TextView bookbtn = new TextView(this);
-        Button bookbtn = new Button(this);
-        bookbtn.setText("Book");
+//        String r = unit.getResourceName();
+//        String c = "Count: " + unit.getResourcesAvailable().toString() + "/" + unit.getCount().toString();
+//        LinearLayout resourceset = new LinearLayout(this);
+//        resourceset.setOrientation(LinearLayout.HORIZONTAL);
+//        resourceset.setBackground(getResources().getDrawable(R.drawable.lay_bg));
+//        resourceset.setPadding(18,32,18,32);
+//        LinearLayout resourceE1 = new LinearLayout(this);
+//        resourceE1.setOrientation(LinearLayout.VERTICAL);
+//        LinearLayout resourceE2 = new LinearLayout(this);
+//        //resourceE1.setBackgroundColor(Color.RED);
+//        //resourceE2.setBackgroundColor(Color.GREEN);
+//        resourceE1.setPadding(40, 30, 0, 20);
+//        resourceE2.setPadding(0, 40, 30, 40);
+//        resourceE1.setMinimumWidth(500);
+//        TextView tvResourse = new TextView(this);
+//        TextView tvCount = new TextView(this);
+//        Space space = new Space(this);
+//        tvResourse.setText(r);
+//        tvResourse.setTextColor(Color.WHITE);
+//        tvResourse.setTextSize(18);
+//        tvResourse.setTypeface(Typeface.SERIF);
+//        tvCount.setText(c);
+//        tvCount.setTextColor(Color.WHITE);
+//        tvCount.setTextSize(12);
+////        TextView bookbtn = new TextView(this);
+     // Button bookbtn = new Button(this);
+//        bookbtn.setText("Book");
         if (value){
+            Button bookbtn = new Button(this);
             bookbtn.setEnabled(false);
         }
         else{
+            String r = unit.getResourceName();
+            String c = "Count: " + unit.getResourcesAvailable().toString() + "/" + unit.getCount().toString();
+            LinearLayout resourceset = new LinearLayout(this);
+            resourceset.setOrientation(LinearLayout.HORIZONTAL);
+            resourceset.setBackground(getResources().getDrawable(R.drawable.lay_bg));
+            resourceset.setPadding(18,32,18,32);
+            LinearLayout resourceE1 = new LinearLayout(this);
+            resourceE1.setOrientation(LinearLayout.VERTICAL);
+            LinearLayout resourceE2 = new LinearLayout(this);
+            //resourceE1.setBackgroundColor(Color.RED);
+            //resourceE2.setBackgroundColor(Color.GREEN);
+            resourceE1.setPadding(40, 30, 0, 20);
+            resourceE2.setPadding(0, 40, 30, 40);
+            resourceE1.setMinimumWidth(500);
+            TextView tvResourse = new TextView(this);
+            TextView tvCount = new TextView(this);
+            Space space = new Space(this);
+            tvResourse.setText(r);
+            tvResourse.setTextColor(Color.WHITE);
+            tvResourse.setTextSize(18);
+            tvResourse.setTypeface(Typeface.SERIF);
+            tvCount.setText(c);
+            tvCount.setTextColor(Color.WHITE);
+            tvCount.setTextSize(12);
+//        TextView bookbtn = new TextView(this);
+            Button bookbtn = new Button(this);
+            bookbtn.setText("Book");
+            bookbtn.setPadding(40, 20, 40, 20);
+            bookbtn.setBackground(getResources().getDrawable(R.drawable.btn_bg));
+            //bookbtn.setBackgroundColor(Color.WHITE);
+            bookbtn.setTextColor(getResources().getColor(R.color.layoutbg));
+            resourceE1.addView(tvResourse);
+            resourceE1.addView(tvCount);
+            resourceE2.addView(bookbtn);
+            resourceset.addView(resourceE1);
+            resourceset.addView(resourceE2);
+            list.addView(resourceset);
+            list.addView(space, 0, 60);
+            list.setPadding(50, 0, 50, 0);
+            bookedmsg = (TextView) findViewById(R.id.bookedmsg);
             bookbtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -382,19 +414,19 @@ public class MainActivity2 extends AppCompatActivity {
 //
 //
 //        });
-        bookbtn.setPadding(40, 20, 40, 20);
-        bookbtn.setBackground(getResources().getDrawable(R.drawable.btn_bg));
-        //bookbtn.setBackgroundColor(Color.WHITE);
-        bookbtn.setTextColor(getResources().getColor(R.color.layoutbg));
-        resourceE1.addView(tvResourse);
-        resourceE1.addView(tvCount);
-        resourceE2.addView(bookbtn);
-        resourceset.addView(resourceE1);
-        resourceset.addView(resourceE2);
-        list.addView(resourceset);
-        list.addView(space, 0, 60);
-        list.setPadding(50, 0, 50, 0);
-        bookedmsg = (TextView) findViewById(R.id.bookedmsg);
+//        bookbtn.setPadding(40, 20, 40, 20);
+//        bookbtn.setBackground(getResources().getDrawable(R.drawable.btn_bg));
+//        //bookbtn.setBackgroundColor(Color.WHITE);
+//        bookbtn.setTextColor(getResources().getColor(R.color.layoutbg));
+//        resourceE1.addView(tvResourse);
+//        resourceE1.addView(tvCount);
+//        resourceE2.addView(bookbtn);
+//        resourceset.addView(resourceE1);
+//        resourceset.addView(resourceE2);
+//        list.addView(resourceset);
+//        list.addView(space, 0, 60);
+//        list.setPadding(50, 0, 50, 0);
+//        bookedmsg = (TextView) findViewById(R.id.bookedmsg);
     }
 
 
@@ -416,8 +448,8 @@ public class MainActivity2 extends AppCompatActivity {
         try {
             bookingDetails.put("id",sroll);
             bookingDetails.put("name",resourceName);
-            bookingDetails.put("day","2020-06-27");
-            bookingDetails.put("reservation_time", "12:00:00");
+            bookingDetails.put("day",date);
+            bookingDetails.put("reservation_time", "12:16:00");
         } catch (JSONException e) {
             e.printStackTrace();
         }
