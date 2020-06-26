@@ -103,13 +103,24 @@ public class MainActivity2 extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.history:
                 openActivity3();
+                return true;
+            case R.id.usericon:
+                openActivity4();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+
         }
 
-        return super.onOptionsItemSelected(item);
+        //return super.onOptionsItemSelected(item);
     }
     public void openActivity3() {
-        Intent intent = new Intent(this,MainActivity3.class);
-        startActivity(intent);
+        Intent intent1 = new Intent(this,MainActivity3.class);
+        startActivity(intent1);
+    }
+    public  void openActivity4() {
+        Intent intent2 = new Intent(this,MainActivity4.class);
+        startActivity(intent2);
     }
 
 
@@ -405,8 +416,8 @@ public class MainActivity2 extends AppCompatActivity {
         try {
             bookingDetails.put("id",sroll);
             bookingDetails.put("name",resourceName);
-            bookingDetails.put("day",date);
-            bookingDetails.put("reservation_time", "12:15:00");
+            bookingDetails.put("day","2020-06-27");
+            bookingDetails.put("reservation_time", "12:00:00");
         } catch (JSONException e) {
             e.printStackTrace();
         }
