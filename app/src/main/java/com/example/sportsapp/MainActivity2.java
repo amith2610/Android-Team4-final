@@ -261,19 +261,7 @@ public class MainActivity2 extends AppCompatActivity {
                             bookedE2.setVisibility(View.INVISIBLE);
                             text.setText("You have already booked a resource !");
                             text.setTextSize(19);
-//                            if (rtime.equals("null")) {
-//                                optionE2.setText("Not Returned");
-//                                optionE2.setEnabled(false);
-//                            }
-//                            else {
-//                                text.setText("No Bookings");
-//                                bookedE2.setVisibility(View.INVISIBLE);
-//                                text.setTextSize(25);
-//                            }
-
-//                            RelativeLayout.LayoutParams layoutParams=(RelativeLayout.LayoutParams) textE2.getLayoutParams();
-//                            layoutParams.width=30;
-//                            textE2.setLayoutParams(layoutParams);
+//                            
 
 
 
